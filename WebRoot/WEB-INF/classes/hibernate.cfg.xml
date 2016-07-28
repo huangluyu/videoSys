@@ -18,7 +18,11 @@
 		<property name="myeclipse.connection.profile">
 			VideoSys
 		</property>
-		<mapping resource="com/hly/videosys/utils/Category.hbm.xml" />
+		<mapping resource="com/hly/videosys2/utils/Category.hbm.xml" />
+		<mapping class="com.hly.videosys2.entity.Userinfo" />
+		<mapping resource="com/hly/videosys2/entity/Userinfo.hbm.xml" />
+		<mapping resource="com/hly/videosys2/entity/Videoinfo.hbm.xml" />
+		<mapping resource="com/hly/videosys2/entity/Commentlist.hbm.xml" />
 
 	</session-factory>
 

@@ -3,12 +3,242 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"  
     "http://struts.apache.org/dtds/struts-2.3.dtd">  
   
-<struts>  
-    <package name="shop" extends="struts-default">  
+<struts>    
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.multipart.maxSize" value="1048576000"/> 
+   
+	<package name="base" extends="struts-default">
+		<interceptors>
+			<interceptor name="logininterceptor" class="com.hly.videosys.interceptor.LoginInterceptor" />
+			
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="params"/>
+				<interceptor-ref name="modelDriven"/>
+			</interceptor-stack>
+
+			<interceptor-stack name="allinterceptor">
+				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="logininterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="allinterceptor" />
+	</package> 
+
+	<package name="common" extends="base">
+		<global-results>
+			<result name="login">/WEB-INF/common/Login.jsp</result>
+			<result name="loginTest" type="redirectAction">
+				<param name="actionName">userManage_login</param>
+				<param name="username">test</param>
+				<param name="password">test</param>
+			</result>
+		</global-results>
+		
+		<action name="loginOut" class="com.hly.videosys.person.LogoutAction" method="execute" >
+			<result name="index" type="redirectAction">index</result>
+			<result name="mIndex" type="redirectAction">mobile</result>
+		</action>
+	</package>
+	
+    <package name="videosys2" extends="struts-default">  
         <!-- category_update.action： 访问update方法 -->  
         <action name="category_*" class="categoryAction" method="{1}">  
             <result name="index">/index.jsp</result>  
-        </action>  
-    </package>  
-  
-</struts>  
+        </action>
+        
+        
+        <action name="index_*" class="indexAction" method="{1}">
+        	<result name="index">/index.jsp</result>
+        </action>
+        
+		<action name="videoList_*" class="videoListAction" method="{1}">
+        	<result name="index">/index.jsp</result>
+        	<result name="tVideoList">/WEB-INF/teacher/videoManage.jsp</result>
+        	<result name="aVideoList">/WEB-INF/admin/videoManage.jsp</result>
+		</action>
+    </package>
+    
+    <package name="outOfControl" extends="struts-default">
+        <action name="userManage_*" class="userManageAction" method="{1}">
+        	<result name="index">/index.jsp</result>
+        </action> 
+        
+    </package>
+    
+	<package name="admin" extends="common">
+		<interceptors>
+			<interceptor name="adminInterceptor" class="com.hly.videosys.interceptor.AdminInterceptor" />
+
+			<interceptor-stack name="adminInterceptor">
+				<interceptor-ref name="params"/>
+				<interceptor-ref name="adminInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="adminInterceptor" />
+		
+		<action name="bootstrap">
+			<result>/WEB-INF/admin/index.jsp</result>
+		</action>
+		
+		<action name="videoWaitVerifyListRead" class="com.hly.videosys.admin.VideoVerifyListReadAction" method="execute">
+			<result>/WEB-INF/admin/videoVerify.jsp</result>
+		</action>	
+	
+		<action name="videoListReadAdmin" class="com.hly.videosys.admin.VideoListForAdminAction" method="execute">
+			<result>/WEB-INF/admin/videoManage.jsp</result>
+		</action>	
+		
+		<action name="commentListReadAdmin" class="com.hly.videosys.admin.CommentListForAdminAction" method="execute">
+			<result name="manage">/WEB-INF/admin/commentManage.jsp</result>
+			<result name="verifyDelete">/WEB-INF/admin/commentVerifyDelete.jsp</result>
+		</action>	
+	
+		<action name="userListReadAdmin" class="com.hly.videosys.admin.UserListForAdminAction" method="execute">
+			<result>/WEB-INF/admin/userManage.jsp</result>
+		</action>	
+	
+		<action name="commentHide" class="com.hly.videosys.admin.CommentHideAction" method="execute">
+			<result name="manage" type="redirectAction">
+				<param name="actionName">commentListReadAdmin</param>
+				<param name="keyIsShow">1</param>
+			</result>
+			<result name="verifyDelete" type="redirectAction">
+				<param name="actionName">commentListReadAdmin</param>
+				<param name="keyIsShow">0</param>
+			</result>
+		</action>	
+	
+		<action name="commentDelete" class="com.hly.videosys.comment.CommentDeleteAction" method="execute">
+			<result name="success" type="redirectAction">
+				<param name="actionName">commentListReadAdmin</param>
+				<param name="keyIsShow">0</param>
+			</result>
+		</action>	
+	</package>
+	
+	<package name="loginVerify" extends="common">
+		<action name="banUser" class="com.hly.videosys.admin.BanUserAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">userListReadAdmin</param>
+			</result>
+			<result name="error" type="redirectAction">
+				<param name="actionName">userListReadAdmin</param>
+			</result>
+		</action>	
+			
+		<action name="uploadVideo">
+			<result>/WEB-INF/teacher/uploadVideo.jsp</result>
+		</action>	
+		
+		<action name="uploadVideoM">
+			<result>/WEB-INF/mobile/teacher/uploadVideo.jsp</result>
+		</action>
+		
+		<action name="commentAdd" class="com.hly.videosys.comment.CommentAddAction" method="execute">
+			<result type="redirectAction" name="videoPlay">
+				<param name="actionName">videoPlay</param>
+				<param name="videoNum">${videoNum}</param>
+				<param name="device">${device}</param>
+			</result>
+			<result type="redirectAction" name="mVideoPlay">
+				<param name="actionName">videoPlay</param>
+				<param name="videoNum">${videoNum}</param>
+				<param name="device">${device}</param>
+			</result>
+      	</action>
+		
+		<action name="pay" class="com.hly.videosys.pay.PayAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">videoPlay</param>
+				<param name="videoNum">${videoNum}</param>
+				<param name="message">${message}</param>
+			</result>
+			
+			<result name="error" type="redirectAction">
+				<param name="actionName">videoListRead</param>
+				<param name="videoAuthor">${videoAuthor}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="videoDelete" class="com.hly.videosys.videoplay.TVideoDeleteAction" method="execute">
+			<result name="success" type="redirectAction">
+				<param name="actionName">videoListRead</param>
+				<param name="videoAuthor">${videoAuthor}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="videoInfoUpdate" class="com.hly.videosys.videoplay.TVideoUpdateAction" method="execute">
+			<result name="success" type="redirectAction">
+				<param name="actionName">videoPlay</param>
+				<param name="videoNum">${videoNum}</param>
+				<param name="message">${message}</param>
+			</result>
+			<result name="error" type="redirectAction">
+				<param name="actionName">videoListRead</param>
+				<param name="videoAuthor">${videoAuthor}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+      	<action name="videoListRead" class="com.hly.videosys.videoplay.VideoListReadAction" method="execute">
+			<result name="videoList">/WEB-INF/videoPlay/videoList.jsp</result>
+			<result name="tVideoList">/WEB-INF/teacher/videoManage.jsp</result>
+			<result name="aVideoList">/WEB-INF/admin/videoManage.jsp</result>
+		</action>
+		
+		<action name="videoPlay" class="com.hly.videosys.videoplay.VideoPlayAction" method="execute">
+			<result name="play">/WEB-INF/videoPlay/videoPlay.jsp</result>
+			<result name="mPlay">/WEB-INF/mobile/videoPlay/videoPlay.jsp</result>
+			<result name="error" type="redirectAction">
+				<param name="actionName">videoListRead</param>
+				<param name="videoAuthor">${videoAuthor}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
+		<action name="login">
+			<result>/WEB-INF/common/Login.jsp</result>
+		</action>
+		
+		<action name="mlogin">
+			<result>/WEB-INF/mobile/common/Login.jsp</result>
+		</action>
+		
+		<action name="personInfo"  class="com.hly.videosys.person.PersonInfoAction">
+			<result name="mPersonInfo">/WEB-INF/mobile/common/personInfo.jsp</result>
+			<result name="personInfo">/WEB-INF/mobile/common/personInfo.jsp</result>
+		</action>
+		
+		<action name="loginAction" class="com.hly.videosys.person.LoginAction" method="execute">
+			<result name="index" type="redirectAction">index_pcRead</result>
+			<result name="mIndex" type="redirectAction">mobile</result>
+			<result name="error">/WEB-INF/common/Login.jsp</result>
+      	</action>
+		
+		<action name="commonFrame" class="com.hly.videosys.common.CommonFrameAction" method="execute" >
+			<result>/WEB-INF/commonFrame.jsp</result>
+		</action>
+		
+		<action name="bootstrapFrame">
+			<result>/WEB-INF/bootstrapFrame.jsp</result>
+		</action>
+		
+		<action name="index" class="com.hly.videosys.index.IndexAction">
+			<result name="success">/WEB-INF/index.jsp</result>
+		</action>
+		
+		<action name="mobile" class="com.hly.videosys.index.MobileIndexAction">
+			<result>/WEB-INF/mobile/index.jsp</result>
+		</action>
+	</package>
+	
+	<package name="noLoginVerify" extends="struts-default">
+		<action name="upload" class="com.hly.videosys.upload.UploadFileAction">
+			<result name="success">/WEB-INF/teacher/uploadVideo.jsp</result>
+		</action>
+	</package>
+</struts>

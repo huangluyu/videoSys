@@ -20,7 +20,23 @@
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />  
 		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/shop?useUnicode=true&amp;characterEncoding=utf8" />  
 		<property name="user" value="root" />  
-		<property name="password" value="abc2384985" />  
+		<property name="password" value="abc2384985" />
+		<!--连接池中保留的最小连接数。-->  
+		<property name="minPoolSize" value="10" />  
+		<!--连接池中保留的最大连接数。Default: 15 -->  
+		<property name="maxPoolSize" value="100" />  
+		<!--最大空闲时间,1800秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->  
+		<property name="maxIdleTime" value="1800" />  
+		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
+		<property name="acquireIncrement" value="3" />
+		<property name="maxStatements" value="1000" />  
+		<property name="initialPoolSize" value="10" />  
+		<!--每60秒检查所有连接池中的空闲连接。Default: 0 -->  
+		<property name="idleConnectionTestPeriod" value="60" />  
+		<!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 -->  
+		<property name="acquireRetryAttempts" value="30" />  
+		<property name="breakAfterAcquireFailure" value="true" />  
+		<property name="testConnectionOnCheckout" value="false" />  
 	</bean>
   
 	<!-- org.springframework.orm.hibernate4.LocalSessionFactoryBean类在spring-orm-4.2.4.RELEASE.jar包的org.springframework.orm.hibernate4包中 -->  
@@ -45,25 +61,36 @@
 	
 	<aop:config>
 	    <!-- 配置哪些包的类要切入事务 -->  
-	    <aop:pointcut id="pointcut" expression="execution(* test.*.*(..))" />  
-	    <aop:advisor advice-ref="advice" pointcut-ref="pointcut"/><!-- 连接了<span style="font-family:Microsoft YaHei;">上</span>面的advice和上面的pointcut -->  
+	    <aop:pointcut id="pointcut" expression="execution(* com.hly.videosys2.*.*(..))" />  
+	    <aop:advisor advice-ref="advice" pointcut-ref="pointcut"/><!-- 连接了上面的advice和上面的pointcut -->  
 	    <!-- aop:pointcut要写在aop:advisor上面，否则会报错 -->  
 	</aop:config>
 	
 	<aop:config proxy-target-class="true"/>
 
-<!-- 	<bean id="baseService" class="test.BaseServiceImpl" lazy-init="true">  
-	     <property name="sessionFactory" ref="sessionFactory" />  
-	</bean>  
-	       
+<!--
+	<bean id="baseService" class="test.BaseServiceImpl" lazy-init="true">  
+		<property name="sessionFactory" ref="sessionFactory" />  
+	</bean>
+	
 	<bean id="categoryService" class="test.CategoryServiceImpl" parent="baseService"/>
 	
 	如果是prototype类型，默认是使用时创建，不是启动时自动创建  
 	<bean id="baseAction" class="test.BaseAction" scope="prototype">  
-	     <property name="categoryService" ref="categoryService"></property>  
+		<property name="categoryService" ref="categoryService"></property>  
 	</bean>  
 
 	<bean id="categoryAction" class="test.CategoryAction" scope="prototype" parent="baseAction"/>
  -->
-	<context:component-scan base-package="test.."/> 
+ 	<bean id="userManageService" class="com.hly.videosys2.service.Impl.UserManageServiceImpl" parent="baseService" />
+ 	<bean id="userManageAction" class="com.hly.videosys2.action.UserManageAction" scope="prototype" parent="baseAction" />
+	
+	<bean id="indexService" class="com.hly.videosys2.service.Impl.IndexServiceImpl" parent="baseService" />
+ 	<bean id="indexAction" class="com.hly.videosys2.action.IndexAction" scope="prototype" parent="baseAction" />
+ 	
+	<bean id="videoListService" class="com.hly.videosys2.service.Impl.VideoListServiceImpl" parent="baseService" />
+ 	<bean id="videoListAction" class="com.hly.videosys2.action.VideoListAction" scope="prototype" parent="baseAction" />
+ 
+ 
+	<context:component-scan base-package="com.hly.videosys2.."/> 
 </beans>

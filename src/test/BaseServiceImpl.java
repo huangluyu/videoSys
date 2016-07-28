@@ -29,6 +29,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
         System.out.println("this代表的是当前调用构造方法的对象" + this);  
         System.out.println("获取当前this对象的父类信息" + this.getClass().getSuperclass());  
         System.out.println("获取当前this对象的父类信息(包括泛型信息)" + this.getClass().getGenericSuperclass());  
+        System.out.println("1");
         //拿到泛型的参数类型  
         ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();  
         clazz = (Class)type.getActualTypeArguments()[0];  

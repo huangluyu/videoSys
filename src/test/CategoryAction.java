@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.hly.videosys.utils.Category;
-import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 @Controller("categoryAction")
@@ -34,10 +33,10 @@ public class CategoryAction extends BaseAction<Category> implements ModelDriven<
 //     ActionContext.getContext().getApplication().put("categoryList", categoryService.query()); //放到application域中  
          
        //解决方案二，实现相应的接口(RequestAware,SessionAware,ApplicationAware)，让相应的map注入  
-       request.put("categoryList", categoryService.query());   
-       session.put("categoryList", categoryService.query());   
-       application.put("categoryList", categoryService.query());   
-       return "index";  
-   }  
- 
-}  
+       request.put("categoryList", categoryService.query());
+       session.put("categoryList", categoryService.query());
+       application.put("categoryList", categoryService.query());
+       return "index";
+   }
+
+}
