@@ -53,11 +53,14 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     @Override  
     public void save(T t) {  
         getSession().save(t);  
-    }  
+    }
   
     @Override  
     public void update(T t) {  
-        getSession().update(t);   
+    	Session session = getSession();
+		session.beginTransaction();
+        session.update(t);
+		session.getTransaction().commit();
     }  
   
     @Override  

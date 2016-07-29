@@ -4,21 +4,23 @@ import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.MultimediaInfo;
 
 import java.io.File;
+
 import org.apache.commons.io.FileUtils;
+
 import java.io.IOException; 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
+import com.hly.videosys2.entity.Userinfo;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-
 import com.opensymphony.xwork2.util.*;
 
 public class UploadFileAction extends ActionSupport{
 	private File myVideo;
-	private String myFileContentType;
+	//private String myFileContentType;
 	private String myVideoFileName;
 	private String destPath;
 	private String setVideoName;
@@ -33,14 +35,21 @@ public class UploadFileAction extends ActionSupport{
 		String username;
 		String filename;
 		destPath = "F:/video_upload";
-		
+		/**
+		 * Src File name: F:\apache-tomcat-8.0.36\work\Catalina\localhost\VideoClass2\ u pload_46b8055f_ae9c_47af_a9ed_17e5dc5cf889_00000003.tmp
+		   Dst File name: 20160702160747792.mp4
+		 *
+		 *
+		 *
+		 */
 		//File file=new File("."); 
 		//String path=file.getAbsolutePath();
 		//path = file.getPath();
 		try{
 			ActionContext actionContext = ActionContext.getContext();
-			Map session = actionContext.getSession();
-			if(!session.get("authority").toString().equals("2"))
+			Map<String, Object> session = actionContext.getSession();
+			Userinfo userinfo = (Userinfo) session.get("userinfo");
+			if(userinfo.getUserAuthority() != 2)
 			{
 				message = "抱歉,您没有上传视频的权限";
 				return SUCCESS;
@@ -95,13 +104,13 @@ public class UploadFileAction extends ActionSupport{
 		return SUCCESS;
 	}
 	
-	public String getMyFileContentType() {
+	/*public String getMyFileContentType() {
 		return myFileContentType;
 	}
 	
 	public void setMyFileContentType(String myFileContentType) {
 		this.myFileContentType = myFileContentType;
-	}
+	}*/
 
 	public String getMessage() {
 		return message;

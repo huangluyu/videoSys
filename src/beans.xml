@@ -60,14 +60,13 @@
 	</tx:advice>  
 	
 	<aop:config>
-	    <!-- 配置哪些包的类要切入事务 -->  
 	    <aop:pointcut id="pointcut" expression="execution(* com.hly.videosys2.*.*(..))" />  
-	    <aop:advisor advice-ref="advice" pointcut-ref="pointcut"/><!-- 连接了上面的advice和上面的pointcut -->  
-	    <!-- aop:pointcut要写在aop:advisor上面，否则会报错 -->  
+	    <aop:advisor advice-ref="advice" pointcut-ref="pointcut"/>
 	</aop:config>
 	
 	<aop:config proxy-target-class="true"/>
 
+	<context:component-scan base-package="com.hly.videosys2.."/>  
 <!--
 	<bean id="baseService" class="test.BaseServiceImpl" lazy-init="true">  
 		<property name="sessionFactory" ref="sessionFactory" />  
@@ -82,15 +81,17 @@
 
 	<bean id="categoryAction" class="test.CategoryAction" scope="prototype" parent="baseAction"/>
  -->
+
  	<bean id="userManageService" class="com.hly.videosys2.service.Impl.UserManageServiceImpl" parent="baseService" />
- 	<bean id="userManageAction" class="com.hly.videosys2.action.UserManageAction" scope="prototype" parent="baseAction" />
-	
 	<bean id="indexService" class="com.hly.videosys2.service.Impl.IndexServiceImpl" parent="baseService" />
- 	<bean id="indexAction" class="com.hly.videosys2.action.IndexAction" scope="prototype" parent="baseAction" />
- 	
 	<bean id="videoListService" class="com.hly.videosys2.service.Impl.VideoListServiceImpl" parent="baseService" />
+	<bean id="commentListService" class="com.hly.videosys2.service.Impl.CommentListServiceImpl" parent="baseService" />
+	<bean id="videoManageService" class="com.hly.videosys2.service.Impl.VideoManageServiceImpl" parent="baseService" />
+	
+ 	<bean id="indexAction" class="com.hly.videosys2.action.IndexAction" scope="prototype" parent="baseAction" />
+ 	<bean id="userManageAction" class="com.hly.videosys2.action.UserManageAction" scope="prototype" parent="baseAction" />
  	<bean id="videoListAction" class="com.hly.videosys2.action.VideoListAction" scope="prototype" parent="baseAction" />
- 
- 
-	<context:component-scan base-package="com.hly.videosys2.."/> 
+ 	<bean id="videoPlayAction" class="com.hly.videosys2.action.VideoPlayAction" scope="prototype" parent="baseAction" />
+	<bean id="videoUploadAction" class="com.hly.videosys2.action.VideoUploadAction" scope="prototype" parent="baseAction" />
+	
 </beans>

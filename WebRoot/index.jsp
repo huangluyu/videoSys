@@ -1,185 +1,192 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<head>
-<title>在线视频教学系统</title>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="${pageContext.request.contextPath}/favicon.ico">
 
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">    
-<meta http-equiv="keywords" content="视频教学,高中,学习">
-<meta http-equiv="description" content="兰州大学在线视频教学系统">
-</head>
+    <title>兰州大学MOOC</title>
 
-<style>
-div.listTitle {
-	width:175px;
-	height:20px;
-	padding: 2px;
-}
+    <!-- Bootstrap core CSS -->
+    <link href="${pageContext.request.contextPath}/dist/css/bootstrap.min.css" rel="stylesheet">
 
-div.leftBig {
-}
+	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	
+    <!-- Custom styles for this template -->
+    <link href="${pageContext.request.contextPath}/css/dashboard.css" rel="stylesheet">
+    
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="${pageContext.request.contextPath}/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="${pageContext.request.contextPath}/assets/js/ie-emulation-modes-warning.js"></script>
 
-div.rightBig {
-	width:180px;
-	height:390px;
-	float:right;
-}
+  	
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
 
-div.listCrosswise {
-	border-top-style:solid;
-	border-width:2px;
-	width:720px;
-	height:160px;
-	padding: 0px;
-}
+  	<style>
+	  	img{
+			border-radius: 9px;
+			-webkit-border-radius: 9px;
+			-moz-border-radius: 9px;
+		}
+	</style>
+	
+  <body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand hidden-sm" href="index.jsp">兰州MOOC</a>
+        </div>
+        <div class="navbar-collapse collapse" role="navigation">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm hidden-md"><a href="index.jsp"  target="_blank">热门视频</a></li>
+            <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-hover="dropdown">年级</a>
+	          <ul class="dropdown-menu" style="min-width:100px">
+	            <li><a href="#">高一</a></li>
+	            <li><a href="#">高二</a></li>
+	            <li><a href="#">高三</a></li>
+	          </ul>
+	        </li>
+		  </ul>
+          <ul id="myUserInfo" style="display:none" class="nav navbar-nav navbar-right hidden-sm">
+            <li class="dropdown">
+	          <a id="realName" href="#" class="dropdown-toggle" data-hover="dropdown" data-close-others="false" role="button" aria-haspopup="true" aria-expanded="false">用户名 <span class="caret"></span></a>
+	          <ul class="dropdown-menu" style="min-width:100px">
+	            <li><a href="#">个人中心</a></li>
+            	<li role="separator" class="divider"></li>
+	            <li><a href="userManage_logout.action">退出登录</a></li>
+	          </ul>
+	        </li>
+            <li><a id="money" href="">积分</a></li>
+            <li id="videoManage" class="dropdown" style="display:none">
+	          <a href="#" class="dropdown-toggle" data-hover="dropdown">我的视频</a>
+	          <ul class="dropdown-menu" style="min-width:100px">
+	            <li><a href="videoList_myVideoList.action">视频管理</a></li>
+	            <li><a href="uploadVideo.action">视频上传</a></li>
+	          </ul>
+	        </li>
+            <li id="adminManage" style="display:none"><a href="">管理中心</a></li>
+          </ul>
+          <form id="loginText" style="display:none" class="navbar-form navbar-right hidden-sm" action="userManage_login.action">
+          	<input name="username" type="text" class="form-control" placeholder="用户名" />
+            <input name="password" type="text" class="form-control" placeholder="密码" />
+            <button type="submit" class="btn btn-primary">登录</button>
+          </form>
+        </div>
+      </div>
+    </div>
 
-div.big {
-	MARGIN-RIGHT: auto;
-	MARGIN-LEFT: auto;
-	width:930px;
-	height:400px;
-}
-
-
-div.listlengthways {
-	border-top-style:solid;
-	border-width:2px;
-	width:160px;
-	height:370px;
-	padding: 10px;
-}
-
-div.videoList {
-	width:160px;
-	height:140px;
-	/* MARGIN-RIGHT: auto; */
-	MARGIN-LEFT: 0px;	
-	float:left;
-	padding: 10px;
-}
-
-</style>
-
-<script type="text/javascript">
-function message(msg){
-	if(msg != "")
-		alert(msg);
-}
-</script>
-
-<body align="center">
-<iframe src="commonFrame" width="930" height="30" frameborder="0"  scrolling="no" allowtransparency="yes" align="center"></iframe>
-<h1>在线视频教学系统</h1>
-<div class="big">
-	<div style="width:725px;height:400px;float:left">
-		<div class="listTitle"><span style="float:left">最新视频</span></div>
-		<div class="listCrosswise">
-		    <c:forEach items="${applicationScope.newList }" var="videoinfo"> 
-				<div class="videoList">
-					<a href="videoPlay?videoNum=${videoinfo.videoNum }">
-						<img src="http://202.201.12.118:8080/video/${videoinfo.videoUrl }.jpg" alt="${videoinfo.videoName }"  width="160" height="100">
-						<span style="float:left">${videoinfo.videoName }</span></br>
-						<span style="float:left">${videoinfo.uploadByUser }
-						&nbsp播放数:${videoinfo.videoPlayTimes }</span>
-					</a>
-				</div>
+    <div class="jumbotron masthead">
+      <div class="container">
+        <h1>MOOC兰州</h1>
+        <h2>随时随地，多终端视频教学，让学习更便捷、简单。</h2>
+      </div>
+    </div>
+    
+    <div class="container">
+    	<!-- 最新视频 -->
+    	<div class="row">
+    		<c:forEach items="${applicationScope.newList }" var="videoinfo">
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div style="padding:2%">
+						<a href="videoPlay?videoNum=${videoinfo.videoNum }">
+							<img src="http://202.201.12.118:8080/video/${videoinfo.videoUrl }.jpg" alt="${videoinfo.videoName }" width="100%">
+							<span >${videoinfo.videoName }</span><br/>
+							<span>${videoinfo.uploadByUser }</span>
+							<span style="float:right">播放数:${videoinfo.videoPlayTimes }</span>
+						</a>
+					</div>
+				</div> 
 		    </c:forEach>
-			<%-- <s:iterator id="video" value="videoNewList">
-				<div class="videoList">
-					<a href="videoPlay?videoNum=<s:property  value="#video.videoNum" />">
-						<img src="http://202.201.12.118:8080/video/<s:property value="#video.videoUrl"/>.jpg" alt="<s:property value="#video.videoName"/>"  width="160" height="100">
-						<span style="float:left"><s:property value="#video.videoName"/></span></br>
-						<span style="float:left"><s:property value="#video.videoAuthorName"/>
-						&nbsp播放数:<s:property value="#video.videoPlayTimes" /></span>
-					</a>
-				</div>
-			</s:iterator> --%>
-		</div><br/>
-		<div class="listTitle"><span style="float:left" >高一</span></div>
-		<div class="listCrosswise">
-			<c:forEach items="${applicationScope.grade1List }" var="videoinfo"> 
-				<div class="videoList">
-					<a href="videoPlay?videoNum=${videoinfo.videoNum }">
-						<img src="http://202.201.12.118:8080/video/${videoinfo.videoUrl }.jpg" alt="${videoinfo.videoName }"  width="160" height="100">
-						<span style="float:left">${videoinfo.videoName }</span></br>
-						<span style="float:left">${videoinfo.uploadByUser }
-						&nbsp播放数:${videoinfo.videoPlayTimes }</span>
-					</a>
-				</div>
+		</div>
+    	<!-- 高一最热视频 -->
+    	<div class="row">
+    		<c:forEach items="${applicationScope.grade1List }" var="videoinfo">
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div style="padding:2%">
+						<a href="videoPlay?videoNum=${videoinfo.videoNum }">
+							<img src="http://202.201.12.118:8080/video/${videoinfo.videoUrl }.jpg" alt="${videoinfo.videoName }" width="100%">
+							<span >${videoinfo.videoName }</span><br/>
+							<span>${videoinfo.uploadByUser }</span>
+							<span style="float:right">播放数:${videoinfo.videoPlayTimes }</span>
+						</a>
+					</div>
+				</div> 
 		    </c:forEach>
-		</div><br/>
-	</div>
-	<div class="rightBig">
-		<div class="listTitle"><span style="float:left">免费排行榜</span><span style="float:right">播放数</span></div>
-		<div class="listlengthways">
-			<%-- <s:iterator id="video" value="videoFreeList" status="L">
-				<div style="width:160px;height:20px">
-					<a href="videoPlay?videoNum=<s:property  value="#video.videoNum" />">
-						<span style="float:left"><s:property  value="#L.index + 1" />.<s:property value="#video.videoName"/></span>
-						<span style="float:right"><s:property value="#video.videoPlayTimes"/></span>
-					</a>
-				</div>
-			</s:iterator> --%>
-			<c:forEach items="${applicationScope.freeList }" var="videoinfo" varStatus="status"> 
-				<div style="width:160px;height:20px">
-					<a href="videoPlay?videoNum=${videoinfo.videoNum }">
-						<span style="float:left">${status.count}.${videoinfo.videoName }</span>
-						<span style="float:right">${videoinfo.videoPlayTimes }</span>
-					</a>
-				</div>
+		</div>
+    	<!-- 高二最热视频 -->
+    	<div class="row">
+    		<c:forEach items="${applicationScope.grade2List }" var="videoinfo">
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div style="padding:2%">
+						<a href="videoPlay?videoNum=${videoinfo.videoNum }">
+							<img src="http://202.201.12.118:8080/video/${videoinfo.videoUrl }.jpg" alt="${videoinfo.videoName }" width="100%">
+							<span >${videoinfo.videoName }</span><br/>
+							<span>${videoinfo.uploadByUser }</span>
+							<span style="float:right">播放数:${videoinfo.videoPlayTimes }</span>
+						</a>
+					</div>
+				</div> 
+		    </c:forEach>
+		</div>
+    	<!-- 高三最热视频 -->
+    	<div class="row">
+    		<c:forEach items="${applicationScope.grade3List }" var="videoinfo">
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div style="padding:2%">
+						<a href="videoPlay?videoNum=${videoinfo.videoNum }">
+							<img src="http://202.201.12.118:8080/video/${videoinfo.videoUrl }.jpg" alt="${videoinfo.videoName }" width="100%">
+							<span >${videoinfo.videoName }</span><br/>
+							<span>${videoinfo.uploadByUser }</span>
+							<span style="float:right">播放数:${videoinfo.videoPlayTimes }</span>
+						</a>
+					</div>
+				</div> 
 		    </c:forEach>
 		</div>
 	</div>
-</div>
+	
 
-<div class="big">
-	<div style="width:725px;height:400px;float:left">
-		<div class="listTitle"><span style="float:left">高二</span></div>
-		<div class="listCrosswise">
-			<c:forEach items="${applicationScope.grade2List }" var="videoinfo"> 
-				<div class="videoList">
-					<a href="videoPlay?videoNum=${videoinfo.videoNum }">
-						<img src="http://202.201.12.118:8080/video/${videoinfo.videoUrl }.jpg" alt="${videoinfo.videoName }"  width="160" height="100">
-						<span style="float:left">${videoinfo.videoName }</span></br>
-						<span style="float:left">${videoinfo.uploadByUser }
-						&nbsp播放数:${videoinfo.videoPlayTimes }</span>
-					</a>
-				</div>
-		    </c:forEach>
-		</div><br/>
-		<div class="listTitle"><span style="float:left">高三</span></div>
-		<div class="listCrosswise">
-			<c:forEach items="${applicationScope.grade3List }" var="videoinfo"> 
-				<div class="videoList">
-					<a href="videoPlay?videoNum=${videoinfo.videoNum }">
-						<img src="http://202.201.12.118:8080/video/${videoinfo.videoUrl }.jpg" alt="${videoinfo.videoName }"  width="160" height="100">
-						<span style="float:left">${videoinfo.videoName }</span></br>
-						<span style="float:left">${videoinfo.uploadByUser }
-						&nbsp播放数:${videoinfo.videoPlayTimes }</span>
-					</a>
-				</div>
-		    </c:forEach>
-		</div>
-	</div>
-	<div class="rightBig">
-		<div class="listTitle"><span style="float:left">付费排行榜</span><span style="float:right">播放数</span></div>
-		<div class="listlengthways">
-			<c:forEach items="${applicationScope.payList }" var="videoinfo" varStatus="status"> 
-				<div style="width:160px;height:20px">
-					<a href="videoPlay?videoNum=${videoinfo.videoNum }">
-						<span style="float:left">${status.count}.${videoinfo.videoName }</span>
-						<span style="float:right">${videoinfo.videoPlayTimes }</span>
-					</a>
-				</div>
-		    </c:forEach>
-		</div>
-	</div>
-</div>
-</body>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
+
+    <script src="${pageContext.request.contextPath}/dist/js/bootstrap.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="${pageContext.request.contextPath}/assets/js/vendor/holder.min.js"></script>
+	
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="${pageContext.request.contextPath}/js/bootstrap-select.js"></script>
+	
+	<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+	<script src="${pageContext.request.contextPath}/js/i18n/defaults-zh_CN.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="${pageContext.request.contextPath}/assets/js/ie10-viewport-bug-workaround.js"></script>
+  
+    <script src="${pageContext.request.contextPath}/myjs/loginAjax.js"></script>
+  
+  </body>
 </html>

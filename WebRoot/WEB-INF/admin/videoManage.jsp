@@ -74,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </ul>
           <ul class="nav nav-sidebar">
             <li class="active"><a href="">视频管理</a></li>
-            <li><a href="videoWaitVerifyListRead.action">视频审核</a></li>
+            <li><a href="videoList_adminVerifyVideoList.action">视频审核</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="commentListReadAdmin.action?keyIsShow=1">评论管理</a></li>

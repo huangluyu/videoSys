@@ -11,14 +11,11 @@ public class UserManageAction extends BaseAction<Userinfo> implements ModelDrive
 	private Userinfo userinfo;
 	
 	public String login(){
-		System.out.println("进入登陆状态");
-		System.out.println("账号：" + model.getUsername());
-		System.out.println("密码：" + model.getPassword());
 		if(userManageService.loginVerify(model)!=null)
 		{
 			userinfo = userManageService.loginVerify(model);
 			session.put("userinfo", userinfo);
-			System.out.println("状态：登陆成功！");
+			System.out.println(model.getUsername() + "登陆成功！");
 		}
 		else
 			System.out.println("登录失败！");

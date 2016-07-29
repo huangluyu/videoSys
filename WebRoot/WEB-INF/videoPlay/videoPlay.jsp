@@ -1,156 +1,206 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
 <html>
-<head>
-<title><s:property value="videoName"/></title>
-</head>
-<link href="http://example.com/path/to/video-js.css" rel="stylesheet">  
-<script src="http://example.com/path/to/video.js"></script>  
-<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="${pageContext.request.contextPath}/favicon.ico">
 
-<script>  
-  _V_.options.flash.swf = "http://example.com/path/to/video-js.swf"  
-</script> 
+    <title>兰州大学MOOC</title>
 
-<style>
-div.commentBase {
-	border-left-style:solid;
-	border-bottom-style:solid;
-	border-right-style:solid;
-	border-width:1px;
-	max-width:500px;
-	MARGIN-RIGHT: auto;
-	MARGIN-LEFT: auto;
-	padding: 8px;
-}
-</style>
+    <!-- Bootstrap core CSS -->
+    <link href="${pageContext.request.contextPath}/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<script type="text/javascript">
-function showdiv(oldName,oldGrade,oldSubject,oldPrice){
-	if($("#show").css("display")=='none'){//如果show是隐藏的
-		$("#show").css("display","block");//show的display属性设置为block（显示）
-		//document.getElementById("s1").selectedIndex = 1;
-		$("#gradeSelect option[value='"+ oldGrade + "'] ").attr("selected",true);
-		$("#subjectSelect option[value='" + oldSubject + "'] ").attr("selected",true);
-		$("#newName").val(oldName);
-		if(oldPrice == "-1"){
-			$("#newPrice").val("0");
-		} else{
-			$("#setCanRead:checkbox").attr("checked",true);
-			$("#newPrice").val(oldPrice);
-		}
-	}else{//如果show是显示的
-		$("#show").css("display","none");//show的display属性设置为none（隐藏）
-	}
-}
-
-function videoDelete(videoNum,videoAuthor,videoName){
-	var r = confirm("您确认进行删除操作吗?该操作不可撤销,将删除该视频及其有关的所有记录!点击确认继续删除操作,点击取消返回.");
-	if (r == true) {
-		var username = prompt("请验证您的用户名来删除视频" + "\"" + videoName + "\"","");
-		if(username == null);
-		else if (username == videoAuthor) {
-			window.location.href = "videoDelete?videoNum=" + videoNum + "&videoAuthor=" + videoAuthor;
-		} else {
-			alert("用户名验证出错,取消删除!");
-		}
-	}
-}
-
-function message(msg){
-	if(msg != "")
-		alert(msg);
-}
-
-function error(msg){
-  	self.parent.alert(msg + "尚未实装!敬请期待!");
-  }
-</script>
- 
-<body align="center" onload="message('<s:property value="message"/>')">
-	<iframe src="commonFrame" width="930" height="30" frameborder="0"  scrolling="no" allowtransparency="yes" align="center"></iframe>
-	<br/>
-	<div>
-		<s:iterator id="videoInfo" value="videoInfo">
-			<strong style="font-size:40px;"><s:property value="#videoInfo.videoName"/></strong>&nbsp
-			<s:property value="#videoInfo.grade"/>·<s:property value="#videoInfo.subject"/>&nbsp
-			<em>讲解教师:<s:property value="#videoInfo.videoAuthorName"/></em>&nbsp
-			<small>播放量:<s:property value="#videoInfo.videoPlayTimes"/>&nbsp
-			上传时间<s:property value="#videoInfo.videoAddTime"/></small>
-			<s:if test="#videoInfo.videoAuthor == username">
-				<a onclick="showdiv('<s:property value="#videoInfo.videoName"/>',
-					'<s:property value="#videoInfo.grade"/>',
-					'<s:property value="#videoInfo.subject"/>',
-					'<s:property value="#videoInfo.videoPrice"/>')" href="#">修改视频信息</a>
-				<a onclick="videoDelete(<s:property  value="videoNum" />,
-						'<s:property value="videoAuthor"/>',
-						'<s:property value="#videoInfo.videoName"/>')" href="#"><small>删除该视频</small></a>
-			</s:if>
-		</s:iterator>
-	</div>
-	<div id="show" style="display:none;">
-		<form action="videoInfoUpdate?videoNum=<s:property value="videoNum"/>" method="post">
-			<table style="" align="center"><tr>
-				<td>修改名字:<input type="text" name="newName" id="newName"/></td>
-				<td>年级:<select name="gradeSelect" id="gradeSelect">
-					<option value="未分类">年级</option>
-				  	<option value="高一">高一</option>
-				  	<option value="高二">高二</option>
-				  	<option value="高三">高三</option>
-				  	<option value="通识">通识</option>
-				</select></td>
-				<td>科目:<select name="subjectSelect" id="subjectSelect">
-					<option value="未分类">未分类</option>
-				  	<option value="语文">语文</option>
-				  	<option value="数学">数学</option>
-				  	<option value="英语">英语</option>
-				  	<option value="生物">生物</option>
-				  	<option value="化学">化学</option>
-				  	<option value="物理">物理</option>
-				  	<option value="政治">政治</option>
-				  	<option value="地理">地理</option>
-				  	<option value="历史">历史</option>
-				</select></td>
-	　　　		<td><input type="checkbox" name="setCanRead" value="yes" id="setCanRead"/>设置公开</td>
-				<td>价格:<input style="width:30px" type="text" name="newPrice" id="newPrice"/></td>
-				<td><input type="submit" value="提交更改"/></td>
-				<td></td>
-			</tr></table>
-		</form>
-	</div><br/>
-	<video id="videoPlay" class="video-js vjs-default-skin" controls preload="auto" 
-		width="930" height="520" poster="http://video-js.zencoder.com/oceans-clip.png" 
-		data-setup='{"example_option":true}' autoplay="autoplay">    
-		<source src="http://202.201.12.118:8080/video/<s:property value="videoUrl"/>" type='video/mp4' />   
-	</video><br/><br/><br/>
-	<div class="commentBase" style="padding:0px;max-width:516px;"></div>
+	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	
-	<div class="commentBase" align="left" style="">
-		<strong>评论列表</strong>
-	</div>
-	<div class="commentBase" align="left" style="max-height:60px;">
-		<form action="commentAdd?videoNum=<s:property value="videoNum"/>" method="post">
-			<table><tr>
-				<td><textarea rows="3" cols="60" name="commentContent"></textarea></td>
-				<td><button type="submit" style="width:53px;height:53px;">发表评论</button></td>
-			</tr></table>
-		</form>
-	</div>
-	<s:iterator id="comment" value="commentList">
-		<div class="commentBase" align="left" style="border-bottom-style:dashed;">
-			<s:property value="#comment.videoComment"/><br/>
+    <!-- Custom styles for this template -->
+    <link href="${pageContext.request.contextPath}/css/dashboard.css" rel="stylesheet">
+    
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+	
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="${pageContext.request.contextPath}/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="${pageContext.request.contextPath}/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand hidden-sm" href="index.jsp">兰州MOOC</a>
+        </div>
+        <div class="navbar-collapse collapse" role="navigation">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm hidden-md"><a href="index.jsp"  target="_blank">导航1</a></li>
+            <li class=""><a href="index.jsp" target="_blank">导航2</a></li>
+            <li class=""><a href="index.jsp" target="_blank">导航3</a></li>
+		  </ul>
+		  <ul class="nav navbar-nav navbar-right hidden-sm">
+            <li><a id="realName" href="">用户名</a></li>
+            <li><a id="money" href="">积分</a></li>
+            <li><a href="">关于</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+<%--     <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.action">兰州MOOC</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">仪表盘</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="搜索...">
+          </form>
+        </div>
+      </div>
+    </nav> --%>
+
+<div class="container projects">
+	<div class="row-fluid" style="margin:0 -30px 0 -30px">
+		<div class="col-md-8 col-xs-12">
+			<div class="page-header">
+				<h1>${requestScope.videoinfo.videoName}
+					<small>很长很长的视频简介会如何显示?</small>
+				</h1>
+				<h5>主页>>${requestScope.videoinfo.videoGrade}>>${requestScope.videoinfo.videoSubject}
+				<span class="label label-primary">等差数列</span>
+				</h5>
+			</div>
 		</div>
-		<div class="commentBase" align="left">
-			<em>留言人:<s:property value="#comment.commentUser"/></em>
-			<s:if test="#videoInfo.videoAuthor == username">
-				<small><a onclick="error('该功能')" href="#">禁言</a></small>
-			</s:if>&nbsp
-			<small>发表于:<s:property value="#comment.commentTime"/></small>
-			<s:if test="#videoInfo.videoAuthor == username">
-				<small><a onclick="error('该功能')" href="#">隐藏评论</a>
-				<a onclick="error('该功能')" href="#">删除</a></small>
-			</s:if>
+		<div class="col-md-4 hidden-xs">
+			<div class="row-fluid hidden-sm" style="margin:40px 0 20px ">
+				<div class="col-md-4 col-xs-4">
+					<a href="#" class="pull-left">
+						<img class="img-responsive" src="http://202.201.12.118:8080/video/default/head1.png" alt='' />
+					</a>
+				</div>
+				<div class="col-md-8 col-xs-8">
+					<h4 class="media-heading">
+						${requestScope.videoinfo.uploadByUser}
+					</h4> 个人简介
+				</div>
+			</div>
 		</div>
-	</s:iterator>
-</body>
+	</div>
+	<div class="row-fluid" style="margin:0 -30px 0 -30px">
+		<div class="col-md-8">
+			<video id="videoPlay" class="video-js vjs-default-skin" controls preload="auto" 
+				width="100%" height="100%" poster="http://video-js.zencoder.com/oceans-clip.png" 
+				data-setup='{"example_option":true}' autoplay="autoplay">    
+				<source src="http://202.201.12.118:8080/video/20160702164041104.mp4" type='video/mp4' />   
+			</video>
+			<div class="page-header">
+				<h3>留言列表:</h3>
+			</div>
+			<div style="border-bottom: 1px solid #eee;">
+				<c:forEach items="${requestScope.commentList}" var="commentinfo">
+				<h5>${commentinfo.commentByUser}:</h5>
+				<h6>${commentinfo.commentContent}</h6>
+				</c:forEach>
+			</div>
+			<div style="margin:20px 0 10px">
+				<img style="max-width:80px;max-height:80px" src="http://202.201.12.118:8080/video/default/head1.png"/>
+				<div style="float:right;width:300px" id="input">
+					<textarea  class="form-control" rows="3"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="row" style="margin:5px">
+				<div class="col-md-6 col-xs-6" style="padding:0">
+					<a href="#" class="pull-left"><img src="http://202.201.12.118:8080/video/default/hd1.jpg" class="media-object img-responsive" alt='' /></a>
+				</div>
+				<div class="col-md-6 col-xs-6">
+					<div class="media-body">
+						<h6 class="media-heading">
+							等差数列 高一|数学
+						</h6> 视频简介1
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin:5px">
+				<div class="col-md-6 col-xs-6" style="padding:0">
+					<a href="#" class="pull-left"><img src="http://202.201.12.118:8080/video/default/hd2.jpg" class="media-object img-responsive" alt='' /></a>
+				</div>
+				<div class="col-md-6 col-xs-6">
+					<div class="media-body">
+						<h6 class="media-heading">
+							等差数列 高一|数学
+						</h6> 视频简介2
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin:5px">
+				<div class="col-md-6 col-xs-6" style="padding:0">
+					<a href="#" class="pull-left"><img src="http://202.201.12.118:8080/video/default/hd3.jpg" class="media-object img-responsive" alt='' /></a>
+				</div>
+				<div class="col-md-6 col-xs-6">
+					<div class="media-body">
+						<h6 class="media-heading">
+							等差数列 高一|数学
+						</h6> 视频简介3
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
+    
+    <script src="${pageContext.request.contextPath}/myjs/loginAjax.js"></script>
+    
+    <script src="${pageContext.request.contextPath}/dist/js/bootstrap.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="${pageContext.request.contextPath}/assets/js/vendor/holder.min.js"></script>
+	
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="${pageContext.request.contextPath}/js/bootstrap-select.js"></script>
+	
+	<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+	<script src="${pageContext.request.contextPath}/js/i18n/defaults-zh_CN.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="${pageContext.request.contextPath}/assets/js/ie10-viewport-bug-workaround.js"></script>
+    
+	
+	
+  </body>
 </html>

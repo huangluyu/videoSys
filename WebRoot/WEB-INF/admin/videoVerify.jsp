@@ -4,6 +4,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html>
 <html>
   <head>
@@ -103,16 +104,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </tr>
               </thead>
               <tbody>
-                <s:iterator id="video" value="tVideoWaitVerifyList">
-					<tr>
-						<td><s:property value="#video.videoAuthor"/></td>
-						<td><s:property value="#video.videoName"/></td>
-						<td><s:property value="#video.videoAddTime"/></td>
-						<td><s:property value="#video.grade"/>|<s:property value="#video.subject"/></td>
-						<td><s:property value="#video.videoTime" />秒</td>
-						<td><a href="videoPlay?videoNum=<s:property  value="#video.videoNum" />">播放</a>&nbsp|&nbsp<a>通过</a>&nbsp|&nbsp<a>拒绝</a></td>
-					</tr>
-				</s:iterator>
+                <c:forEach items="${request.videoList }" var="videoinfo" varStatus="status"> 
+              		<tr>
+              			<td>${status.count }</td>
+              			<td>${videoinfo.uploadByUser }</td>
+              			<td>${videoinfo.videoName }</td>
+              			<td>${videoinfo.uploadTime }</td>
+              			<td>${videoinfo.videoGrade }|${videoinfo.videoSubject }</td>
+              			<td>${videoinfo.videoLength }秒</td>
+              			<td>${videoinfo.videoExamineState }</td>
+              			<td><a href="videoPlay?videoNum=${videoinfo.videoNum }">播放</a>&nbsp|&nbsp<a>通过</a>&nbsp|&nbsp<a>拒绝</a></td>
+              		</tr>
+              	</c:forEach>
               </tbody>
             </table>
           </div>

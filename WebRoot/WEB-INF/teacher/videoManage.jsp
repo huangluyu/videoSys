@@ -59,6 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="搜索...">
+            <input type="text" class="form-control" placeholder="搜索...">
           </form>
         </div>
       </div>
@@ -69,6 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="">视频管理</a></li>
+            <li><a href="uploadVideo.action">视频上传</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="commentListReadAdmin.action?keyIsShow=1">评论管理</a></li>

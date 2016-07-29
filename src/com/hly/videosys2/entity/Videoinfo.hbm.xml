@@ -8,7 +8,7 @@
     <class name="com.hly.videosys2.entity.Videoinfo" table="videoinfo" catalog="videosys">
         <id name="videoNum" type="java.lang.Integer">
             <column name="videoNum" />
-            <generator class="identity" />
+            <generator class="native" />
         </id>
         <property name="videoName" type="java.lang.String">
             <column name="videoName">
@@ -41,7 +41,7 @@
             </column>
         </property>
         <property name="uploadByUser" type="java.lang.String">
-            <column name="uploadByUser" not-null="true">
+            <column name="uploadByUser">
                 <comment>上传者</comment>
             </column>
         </property>
@@ -56,7 +56,7 @@
             </column>
         </property>
         <property name="videoPlayTimes" type="java.lang.Integer">
-            <column name="videoPlayTimes" not-null="true">
+            <column name="videoPlayTimes">
                 <comment>播放数</comment>
             </column>
         </property>
@@ -64,6 +64,9 @@
             <column name="videoExamineState">
                 <comment>审核状态</comment>
             </column>
+        </property>
+        <property name="videoUploadInfo" type="java.lang.String">
+            <column name="videoUploadInfo" />
         </property>
     </class>
 </hibernate-mapping>

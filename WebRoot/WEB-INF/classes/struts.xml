@@ -11,21 +11,26 @@
 		<interceptors>
 			<interceptor name="logininterceptor" class="com.hly.videosys.interceptor.LoginInterceptor" />
 			
-			<interceptor-stack name="defaultStack">
-				<interceptor-ref name="params"/>
-				<interceptor-ref name="modelDriven"/>
-			</interceptor-stack>
-
 			<interceptor-stack name="allinterceptor">
-				<interceptor-ref name="defaultStack"/>
 				<interceptor-ref name="logininterceptor" />
+				<interceptor-ref name="defaultStack"/>
 			</interceptor-stack>
 		</interceptors>
 		
 		<default-interceptor-ref name="allinterceptor" />
 	</package> 
 
-	<package name="common" extends="base">
+	<package name="default" namespace="/" extends="struts-default">  
+        <action name="loginAjax" class="com.hly.videosys2.action.ajax.LoginVerifyAjaxAction" method="loginVerify">  
+            <result name="isExist" type="stream">  
+                <param name="contentType">text/html</param>  
+                <!-- 指定由getReuslt()方法返回输出结果的InputStream -->  
+                <param name="inputName">result</param>  
+            </result>  
+        </action>  
+    </package>  
+    
+    <package name="common" extends="base">
 		<global-results>
 			<result name="login">/WEB-INF/common/Login.jsp</result>
 			<result name="loginTest" type="redirectAction">
@@ -34,36 +39,33 @@
 				<param name="password">test</param>
 			</result>
 		</global-results>
-		
-		<action name="loginOut" class="com.hly.videosys.person.LogoutAction" method="execute" >
-			<result name="index" type="redirectAction">index</result>
-			<result name="mIndex" type="redirectAction">mobile</result>
-		</action>
 	</package>
-	
-    <package name="videosys2" extends="struts-default">  
-        <!-- category_update.action： 访问update方法 -->  
-        <action name="category_*" class="categoryAction" method="{1}">  
-            <result name="index">/index.jsp</result>  
-        </action>
-        
-        
+    
+    <package name="videosys2" extends="common">  
         <action name="index_*" class="indexAction" method="{1}">
-        	<result name="index">/index.jsp</result>
+        	<result name="index" type="redirectAction">index</result>
         </action>
         
 		<action name="videoList_*" class="videoListAction" method="{1}">
-        	<result name="index">/index.jsp</result>
+        	<result name="index" type="redirectAction">index</result>
         	<result name="tVideoList">/WEB-INF/teacher/videoManage.jsp</result>
         	<result name="aVideoList">/WEB-INF/admin/videoManage.jsp</result>
+        	<result name="a_Verify">/WEB-INF/admin/videoVerify.jsp</result>
+		</action>
+		
+		<action name="uploadTest" class="videoUploadAction" method="upload" >
+        	<result name="uploadFile" type="redirectAction">uploadVideo</result>
 		</action>
     </package>
     
-    <package name="outOfControl" extends="struts-default">
+    <package name="videosys2_noLogin" extends="struts-default">
+		<action name="index">
+			<result>/index.jsp</result>
+		</action>
+		
         <action name="userManage_*" class="userManageAction" method="{1}">
-        	<result name="index">/index.jsp</result>
-        </action> 
-        
+        	<result name="index" type="redirectAction">index</result>
+        </action>
     </package>
     
 	<package name="admin" extends="common">
@@ -190,7 +192,7 @@
 			<result name="aVideoList">/WEB-INF/admin/videoManage.jsp</result>
 		</action>
 		
-		<action name="videoPlay" class="com.hly.videosys.videoplay.VideoPlayAction" method="execute">
+		<action name="videoPlay" class="videoPlayAction" method="playVideoByNum">
 			<result name="play">/WEB-INF/videoPlay/videoPlay.jsp</result>
 			<result name="mPlay">/WEB-INF/mobile/videoPlay/videoPlay.jsp</result>
 			<result name="error" type="redirectAction">
@@ -202,6 +204,11 @@
 		
 		<action name="login">
 			<result>/WEB-INF/common/Login.jsp</result>
+		</action>
+		
+		<action name="logOut" class="com.hly.videosys.person.LogoutAction" method="execute" >
+			<result name="index" type="redirectAction">index</result>
+			<result name="mIndex" type="redirectAction">mobile</result>
 		</action>
 		
 		<action name="mlogin">
@@ -223,22 +230,16 @@
 			<result>/WEB-INF/commonFrame.jsp</result>
 		</action>
 		
-		<action name="bootstrapFrame">
-			<result>/WEB-INF/bootstrapFrame.jsp</result>
-		</action>
-		
-		<action name="index" class="com.hly.videosys.index.IndexAction">
-			<result name="success">/WEB-INF/index.jsp</result>
-		</action>
 		
 		<action name="mobile" class="com.hly.videosys.index.MobileIndexAction">
 			<result>/WEB-INF/mobile/index.jsp</result>
 		</action>
+		
+		<action name="upload" class="com.hly.videosys.upload.UploadFileAction">
+			<result name="success">/WEB-INF/teacher/uploadVideo_old.jsp</result>
+		</action>
 	</package>
 	
 	<package name="noLoginVerify" extends="struts-default">
-		<action name="upload" class="com.hly.videosys.upload.UploadFileAction">
-			<result name="success">/WEB-INF/teacher/uploadVideo.jsp</result>
-		</action>
 	</package>
 </struts>

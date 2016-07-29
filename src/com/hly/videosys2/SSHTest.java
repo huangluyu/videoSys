@@ -1,13 +1,14 @@
 package com.hly.videosys2;
-import java.util.Date;
 
 import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.hly.videosys2.entity.*;
 import com.hly.videosys2.service.*;
 
 /** 
@@ -24,21 +25,17 @@ import com.hly.videosys2.service.*;
 @RunWith(SpringJUnit4ClassRunner.class)  
 @ContextConfiguration(locations="classpath:beans.xml")  
 public class SSHTest {  
-      
-	@Resource
-    private Date date;  
-	
-    @Test //测试Spring IOC的开发环境  
-    public void springIoc() {  
-        System.out.println(date);  
-    }  
     
     @Resource
-    private VideoListService videoListService;
+    private VideoManageService videoManageService;
     
     @Test
-    public void indexRead(){
-    	System.out.println("Num:" + videoListService.videoListNumRead("", "", "", ""));
+    public void updateTest(){
+		Videoinfo videoinfo = videoManageService.getInfoByVideoUrl("20160708134747498");
+		System.out.println(videoinfo.getVideoNum());
+		videoinfo.setVideoUploadInfo("修改!");
+		videoinfo.setVideoPrice("0");
+		videoManageService.update(videoinfo);
     }
     
     /*@Resource  

@@ -20,6 +20,7 @@ public class Videoinfo implements java.io.Serializable {
 	private String videoSubject;
 	private Integer videoPlayTimes;
 	private String videoExamineState;
+	private String videoUploadInfo;
 
 	// Constructors
 
@@ -27,17 +28,12 @@ public class Videoinfo implements java.io.Serializable {
 	public Videoinfo() {
 	}
 
-	/** minimal constructor */
-	public Videoinfo(String uploadByUser, Integer videoPlayTimes) {
-		this.uploadByUser = uploadByUser;
-		this.videoPlayTimes = videoPlayTimes;
-	}
-
 	/** full constructor */
 	public Videoinfo(String videoName, String videoSize, String videoLength,
 			String uploadTime, String videoUrl, String videoPrice,
 			String uploadByUser, String videoGrade, String videoSubject,
-			Integer videoPlayTimes, String videoExamineState) {
+			Integer videoPlayTimes, String videoExamineState,
+			String videoUploadInfo) {
 		this.videoName = videoName;
 		this.videoSize = videoSize;
 		this.videoLength = videoLength;
@@ -49,6 +45,7 @@ public class Videoinfo implements java.io.Serializable {
 		this.videoSubject = videoSubject;
 		this.videoPlayTimes = videoPlayTimes;
 		this.videoExamineState = videoExamineState;
+		this.videoUploadInfo = videoUploadInfo;
 	}
 
 	// Property accessors
@@ -147,6 +144,14 @@ public class Videoinfo implements java.io.Serializable {
 
 	public void setVideoExamineState(String videoExamineState) {
 		this.videoExamineState = videoExamineState;
+	}
+
+	public String getVideoUploadInfo() {
+		return this.videoUploadInfo;
+	}
+
+	public void setVideoUploadInfo(String videoUploadInfo) {
+		this.videoUploadInfo = videoUploadInfo;
 	}
 
 }

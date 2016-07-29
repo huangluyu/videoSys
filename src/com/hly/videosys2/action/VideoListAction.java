@@ -29,7 +29,6 @@ public class VideoListAction extends BaseAction<Videoinfo> implements ModelDrive
 		List<?> videoList;
 		List<Userinfo> teacherList;
 		int pageSum;
-		String myName = "";
 		
 		videoList = videoListService.videoListRead(model.getUploadByUser() , model.getVideoGrade(), model.getVideoSubject(), model.getVideoName(), page);
 		pageSum = videoListService.videoListNumRead(model.getUploadByUser() , model.getVideoGrade(), model.getVideoSubject(), model.getVideoName());
@@ -40,6 +39,13 @@ public class VideoListAction extends BaseAction<Videoinfo> implements ModelDrive
 		return "aVideoList";
 	}
 	
+	public String adminVerifyVideoList() {
+		List<?> videoList;
+		
+		videoList = videoListService.videoListWaitVerify(page);
+		request.put("videoList", videoList);
+		return "a_Verify";
+	}
 	public int getPage() {
 		return page;
 	}

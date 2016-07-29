@@ -79,4 +79,15 @@ public class VideoListServiceImpl extends BaseServiceImpl<Videoinfo> implements
 		        .uniqueResult() - 1) / 10 + 1);
 	}
 
+	//找出所有待审核的视频
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Videoinfo> videoListWaitVerify(int Page){
+		String hql = "from Videoinfo v where v.videoExamineState = 0";
+		return getSession().createQuery(hql)
+		        .setFirstResult((Page - 1) * 10)
+		        .setMaxResults(Page * 10)
+		        .list();
+	}
+	
 }

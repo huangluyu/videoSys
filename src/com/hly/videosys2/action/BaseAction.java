@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.hly.videosys2.service.*;
+import com.hly.videosys2.entity.*;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -35,6 +36,12 @@ public class BaseAction<T> extends ActionSupport implements RequestAware,Session
 	
 	@Resource
 	protected VideoListService videoListService;
+	
+	@Resource
+	protected CommentListService commentListService;
+	
+	@Resource
+	protected VideoManageService videoManageService;
 	
 	//域对象 
     protected Map<String, Object> request;  

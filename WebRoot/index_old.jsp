@@ -73,7 +73,7 @@ function message(msg){
 }
 </script>
 
-<body align="center" onload="message('<s:property value="message"/>')">
+<body align="center">
 <iframe src="commonFrame" width="930" height="30" frameborder="0"  scrolling="no" allowtransparency="yes" align="center"></iframe>
 <h1>在线视频教学系统</h1>
 <div class="big">
