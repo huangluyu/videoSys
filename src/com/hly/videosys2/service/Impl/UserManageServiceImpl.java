@@ -27,6 +27,13 @@ public class UserManageServiceImpl extends BaseServiceImpl<Userinfo> implements 
 		return getSession().createQuery(hql).list();
 	}
 	
+	//获得真实姓名
+	public String getRealName(String username) {
+		String hql = "select u.realName from Userinfo u where u.username = :username";
+		return (String) getSession().createQuery(hql)
+				.setString("username", username)
+				.uniqueResult();
+	}
 	
 	/*public static ResultSet getTeacherList()  throws Exception {
 		String sql="select * from userinfo where userAuthority = 2";

@@ -9,4 +9,6 @@ public interface UserManageService extends BaseService<Userinfo>{
 	public Userinfo loginVerify(Userinfo user);
 	
 	public List<Userinfo> getTeacherList() ;
+
+	public String getRealName(String commentByUser);
 }

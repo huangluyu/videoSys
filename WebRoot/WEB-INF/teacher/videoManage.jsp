@@ -55,10 +55,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">仪表盘</a></li>
+            <li><a href="#">后台管理中心</a></li>
           </ul>
           <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="搜索...">
             <input type="text" class="form-control" placeholder="搜索...">
           </form>
         </div>
@@ -73,8 +72,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="uploadVideo.action">视频上传</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="commentListReadAdmin.action?keyIsShow=1">评论管理</a></li>
-            <li><a href="commentListReadAdmin.action?keyIsShow=0">恢复评论</a></li>
+            <li><a href="commentManage_getTeacherCommentList.action">评论管理</a></li>
+            <li><a href="commentManage_getTeacherCommentList.action">恢复评论</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -142,7 +141,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               			<td>${videoinfo.videoExamineState }</td>
               			<td>${videoinfo.uploadTime }</td>
               			<td>${videoinfo.videoLength }秒</td>
-              			<td><a href="videoPlay?videoNum=${videoinfo.videoNum }">播放</a>&nbsp|&nbsp<a onclick="deleteThis(this , ${videoinfo.videoNum })">修改</a>&nbsp|&nbsp<a>删除</a></td>
+              			<td><a href="videoPlay?videoNum=${videoinfo.videoNum }">播放</a>&nbsp|&nbsp<a onclick="changeInfoThis(this , ${videoinfo.videoNum })">修改</a>&nbsp|&nbsp<a>删除</a></td>
               		</tr>
               	</c:forEach>
                <%--  <s:iterator id="video" value="videoList" status="L">
@@ -173,22 +172,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title" id="myModalLabel">视频信息修改</h4>
 	      </div>
-	      <form action="videoInfoUpdate">
+	      <form action="videoManage_updateVideoinfo.action">
 	      <div class="modal-body">
 	      	<p class="hidden">视频编号:<input id="videoNum" name="videoNum"/></p>
-	      	<p>视频名称:<input id="videoNewName" name="videoNewName"/></p>
+	      	<p>视频名称:<input id="videoName" name="videoName"/></p>
 	      	<p>
 	      		视频年级:
-	      		<select name="gradeSelect" id="gradeSelect" data-width="fit">
-					<option value="all">全部</option>
+	      		<select name="videoGrade" id="videoGrade" data-width="fit">
+					<option value="未分类">全部</option>
 				 	<option value="高一">高一</option>
 				 	<option value="高二">高二</option>
 				 	<option value="高三">高三</option>
 				 	<option value="通识">通识</option>
 				</select>
 				视频科目:
-				<select name="subjectSelect" id="subjectSelect" data-width="fit">
-				  	<option value="all">全部</option>
+				<select name="videoSubject" id="videoSubject" data-width="fit">
+				  	<option value="未分类">全部</option>
 				  	<option value="语文">语文</option>
 				  	<option value="数学">数学</option>
 				  	<option value="英语">英语</option>
@@ -200,7 +199,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  	<option value="历史">历史</option>
 				</select>
 			</p>
-	      	<p>视频价格:<input id="newPrice" name="newPrice" style="width:5em"/>是否显示<input id="isShow" name="isShow" type="checkbox"/></p>
+	      	<p>视频价格:<input id="videoPrice" name="videoPrice" style="width:5em"/>是否显示<input id="isShow" name="isShow" type="checkbox"/></p>
 	      	<p>一经删除后不可复原,无法撤销,请问继续吗?</p>
 	      </div>
 	      <div class="modal-footer">
@@ -228,13 +227,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	//alert($("#change").attr("class","show"));
     }
     
-	function deleteThis(obj,videoNum){
+	function changeInfoThis(obj,videoNum){
 		var tds=$(obj).parent().parent().find('td');
-		$('#videoNewName').attr("value",tds.eq(1).text());
-		$('#gradeSelect').val(tds.eq(2).text()); 
-		$('#subjectSelect').val(tds.eq(3).text()); 
-		$('#newPrice').attr("value",tds.eq(4).text());
-		$('#videoNum').attr("value",videoNum);
+		$("#videoName").attr("value",tds.eq(1).text());
+		$("#videoGrade").val(tds.eq(2).text()); 
+		$("#videoSubject").val(tds.eq(3).text()); 
+		$("#videoPrice").attr("value",tds.eq(4).text());
+		$("#videoNum").attr("value",videoNum);
 		if(tds.eq(4).text() == "-1"){
 			$("#videoPrice").val("0");
 			$("#isShow").attr("checked",false);

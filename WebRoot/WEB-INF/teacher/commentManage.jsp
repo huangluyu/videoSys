@@ -55,7 +55,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">仪表盘</a></li>
+            <li><a href="#">后台管理中心</a></li>
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="搜索...">
@@ -68,44 +68,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="admin.action">管理中心 <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">发布活动</a></li>
-            <li><a href="#">留言中心</a></li>
+            <li><a href="videoList_myVideoList.action">视频管理</a></li>
+            <li><a href="uploadVideo.action">视频上传</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="videoList_allVideoList.action">视频管理</a></li>
-            <li><a href="videoList_adminVerifyVideoList.action">视频审核</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="commentListReadAdmin.action?keyIsShow=1">评论管理</a></li>
+            <li class="active"><a href="">评论管理</a></li>
             <li><a href="commentListReadAdmin.action?keyIsShow=0">恢复评论</a></li>
           </ul>
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="">用户中心</a></li>
-            <li><a href="">用户管理</a></li>
-          </ul>
         </div>
+        
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-
-          <h2 class="sub-header">用户列表</h2>
-          	<form class="form-inline" action="userListReadAdmin" methor="post">
-          		<input type="hidden" name="keyIsShow" value="1" />
+          <h2 class="sub-header">评论列表</h2>
+          	<form class="form-inline" action="commentManage_getTeacherCommentList.action" methor="post">
           		<div class="form-group">
 					<label for="">用户名:</label>
-					<input type="text" class="form-control" name="username" placeholder="" style="width:10em">
+					<input type="text" class="form-control" name="commentByUser" placeholder="" style="width:10em">
 				</div>
           		<div class="form-group">
-					<label for="">姓名:</label>
-					<input type="text" class="form-control" name="realName" placeholder="" style="width:10em">
-				</div>
-          		<div class="form-group">
-					<label for="">身份:</label>
-					<input type="text" class="form-control" name="authority" placeholder="" style="width:5em">
+					<label for="">视频编号:</label>
+					<input type="text" class="form-control" name="videoNum" placeholder="" style="width:5em">
 				</div>
           		<div class="form-group">
           			<label for="">第</label>
           			<input type="text" class="form-control" name="page" placeholder="" style="width:3em">
-          			<label for="">页,共<s:property value="pageSum"/>页</label>
+          			<label for="exampleInputFile">页,共<s:property value="pageSum"/>页</label>
 				</div>
 				<button type="submit" class="btn btn-primary">检索</button>
 			</form>
@@ -113,28 +99,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
+                  <th align="center">编号</th>
+                  <th align="center">留言人</th>
                   <th align="center">用户名</th>
-                  <th align="center">姓名</th>
-                  <th align="center">身份</th>
-                  <th align="center">积分</th>
+                  <th align="center">留言内容</th>
+                  <th align="center">留言时间</th>
+                  <th align="center">视频编号</th>
                   <th align="center">管理操作</th>
                 </tr>
               </thead>
               <tbody>
-                <s:iterator id="user" value="userListForAdmin" status="L">
-					<tr>
-						<td><s:property value="#user.username"/></td>
-						<td><s:property value="#user.realName"/></td>
-						<td><s:property value="#user.authority"/></td>
-						<td><s:property value="#user.money"/></td>
-						<td><a href="banUser.action?username=<s:property value="#user.username"/>&level=1"><button type="button" class="btn btn-primary btn-xs btn-danger">封禁</button></a>
-							&nbsp|&nbsp
-							<a href="banUser.action?username=<s:property value="#user.username"/>&level=3">禁言</a>
-						</td>
-					</tr>
-				</s:iterator>
-              </tbody>
+              	<c:forEach items="${request.commentList }" var="commentList">
+              		<tr>
+              			<td>${commentList.commentNum }</td>
+              			<td>${commentList.commentTarget }</td>
+              			<td>${commentList.commentByUser }</td>
+              			<td>${commentList.commentContent }</td>
+              			<td>${commentList.commentTime }</td>
+              			<td>${commentList.videoNum }&nbsp(<a href="videoPlay?videoNum=${commentList.videoNum }">播放</a>)</td>
+              			<td>
+              				<a href="commentManage_commentHide.action?commentNum=${commentList.commentNum }">
+              					<button type="button" class="btn btn-primary btn-xs btn-danger">删除</button>
+              				</a>&nbsp|&nbsp<a>禁言</a>
+           				</td>
+              		</tr>
+              	</c:forEach>
+              	</tbody>
             </table>
+              <%-- 	<c:forEach var="list" items="${request.commentList}">  
+					${list.key.name}
+					<c:forEach var="ob1" items="${list.value}" varStatus="status" begin="0" end="0">  
+				    	<c:forEach var="ob11" items="${status.current}">  
+			            	<c:out value="${ob11.commentNum}"></c:out>  
+			             	<c:out value="${ob11.commentByUser}"></c:out>  
+		            	</c:forEach>      
+		       		</c:forEach>
+			        <c:forEach var="ob2" items="${list.value}" varStatus="status" begin="1" end="1">  
+			        	<c:forEach var="ob22" items="${status.current}">  
+							<c:out value="${ob22.name}"></c:out>  
+			            	<c:out value="${ob22.age}"></c:out>  
+			        	</c:forEach>
+			        </c:forEach>  
+		        </c:forEach> --%>  
           </div>
         </div>
       </div>

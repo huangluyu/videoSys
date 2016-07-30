@@ -72,12 +72,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="bootstrap.action">管理中心 <span class="sr-only">(current)</span></a></li>
+            <li><a href="admin.action">管理中心 <span class="sr-only">(current)</span></a></li>
             <li><a href="#">发布活动</a></li>
             <li><a href="#">留言中心</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="videoListReadAdmin.action">视频管理</a></li>
+            <li><a href="videoList_allVideoList.action">视频管理</a></li>
             <li class="active"><a href="">视频审核</a></li>
           </ul>
           <ul class="nav nav-sidebar">
@@ -95,6 +95,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <table class="table table-striped">
               <thead>
                 <tr>
+                  <th></th>
                   <th align="center">视频作者</th>
                   <th align="center">视频名称</th>
                   <th align="center">上传时间</th>

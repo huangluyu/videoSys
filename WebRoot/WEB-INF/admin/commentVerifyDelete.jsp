@@ -68,16 +68,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="bootstrap.action">管理中心 <span class="sr-only">(current)</span></a></li>
+            <li><a href="admin.action">管理中心 <span class="sr-only">(current)</span></a></li>
             <li><a href="#">发布活动</a></li>
             <li><a href="#">留言中心</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="videoListRead.action?key=2">视频管理</a></li>
-            <li><a href="videoWaitVerifyListRead.action">视频审核</a></li>
+            <li><a href="videoList_allVideoList.action">视频管理</a></li>
+            <li><a href="videoList_adminVerifyVideoList.action">视频审核</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="commentListReadAdmin.action?keyIsShow=1">评论管理</a></li>
+            <li><a href="commentManage_getAdminCommentList.action">评论管理</a></li>
             <li class="active"><a href="">恢复评论</a></li>
           </ul>
           <ul class="nav nav-sidebar">
@@ -119,22 +119,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </tr>
               </thead>
               <tbody>
-                <s:iterator id="comment" value="commentListForAdmin" status="L">
+                <c:forEach items="${request.commentList }" var="commentList">
 					<tr>
-						<td><s:property value="#comment.commentNum"/></td>
-						<td><s:property value="#comment.commentUserRealName"/></td>
-						<td><s:property value="#comment.commentUser"/></td>
-						<td><s:property value="#comment.videoComment"/></td>
-						<td><s:property value="#comment.commentTime"/></td>
-						<td><s:property value="#comment.videoNum"/>&nbsp(<a href="videoPlay?videoNum=<s:property  value="#comment.videoNum" />">播放</a>)</td>
-						<td>
-							<a href="commentHide.action?commentNum=<s:property value="#comment.commentNum"/>&isShow=1">
+              			<td>${commentList.commentNum }</td>
+              			<td>${commentList.commentTarget }</td>
+              			<td>${commentList.commentByUser }</td>
+              			<td>${commentList.commentContent }</td>
+              			<td>${commentList.commentTime }</td>
+              			<td>${commentList.videoNum }&nbsp(<a href="videoPlay?videoNum=${commentList.videoNum }">播放</a>)</td>
+              			<td>
+							<a href="commentManage_commentShow.action?commentNum=${commentList.commentNum }">
 								<button type="button" class="btn btn-primary btn-xs">恢复</button></a>
 							&nbsp|&nbsp
 							<a onclick="deleteThis(this)">彻底删除</a>
 						</td>
 					</tr>
-				</s:iterator>
+				</c:forEach>
               </tbody>
             </table>
             <!-- Button trigger modal -->

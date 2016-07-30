@@ -1,5 +1,7 @@
 package com.hly.videosys2;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -28,14 +30,16 @@ public class SSHTest {
     
     @Resource
     private VideoManageService videoManageService;
+    @Resource
+    private VideoListService videoListService;
+    @Resource
+    private CommentListService commentListService;
+    @Resource
+    private CommentManageService commentManageService;
     
     @Test
-    public void updateTest(){
-		Videoinfo videoinfo = videoManageService.getInfoByVideoUrl("20160708134747498");
-		System.out.println(videoinfo.getVideoNum());
-		videoinfo.setVideoUploadInfo("修改!");
-		videoinfo.setVideoPrice("0");
-		videoManageService.update(videoinfo);
+    public void getVideoListByUser(){
+    	commentManageService.commentShowSet(11, "1");
     }
     
     /*@Resource  

@@ -6,9 +6,13 @@ import com.hly.videosys2.entity.Commentlist;
 
 public interface CommentListService extends BaseService<Commentlist> {
 
-	public List<Commentlist> commentReadByVideoNum(Integer videoNum);
-	
-	public List<Commentlist> commentReadByCondition(Integer videoNum, String commentByUser, String commentShowSet, int page);
-	
-	public int commentListRead(Integer videoNum, String commentByUser, String commentShowSet);
+	List<Commentlist> commentReadByVideoNum(Integer videoNum);
+		
+	int commentListRead(Integer videoNum, String commentByUser, String commentShowSet);
+
+	List<Commentlist> getTeacherCommentList(String username,
+			String commentByUser, String commentShowSet, int page);
+
+	List<Commentlist> commentReadByCondition(String videoNum,
+			String commentByUser, String commentShowSet, int page);
 }

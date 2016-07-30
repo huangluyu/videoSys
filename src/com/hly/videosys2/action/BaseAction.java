@@ -43,6 +43,9 @@ public class BaseAction<T> extends ActionSupport implements RequestAware,Session
 	@Resource
 	protected VideoManageService videoManageService;
 	
+	@Resource
+	protected CommentManageService commentManageService;
+	
 	//域对象 
     protected Map<String, Object> request;  
     protected Map<String, Object> session;  

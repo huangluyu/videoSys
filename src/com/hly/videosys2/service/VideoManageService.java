@@ -6,10 +6,10 @@ public interface VideoManageService extends BaseService<Videoinfo> {
 
 	Videoinfo getInfoByVideoNum(Integer videoNum);
 
-	int videoInfoAdd(String videoName, String videoUrl, String username,
-			String uploadtime, String videoTime, String grade, String subject)
-			throws Exception;
-
 	Videoinfo getInfoByVideoUrl(String videoUrl);
+
+	int updateVideoinfo(Videoinfo model, Videoinfo videoinfo);
+
+	void updateVideoExamineState(Integer videoNum, String videoExamineState);
 
 }

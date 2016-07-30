@@ -44,10 +44,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			-webkit-border-radius: 9px;
 			-moz-border-radius: 9px;
 		}
+		.jumbotron{ 
+			/* background:url(http://202.201.12.118:8080/video/default/nightsky.jpg);  */
+			background-color: #4879bd;
+			color: #FFFFFF;
+		} 
+		
 	</style>
 	
   <body>
-	<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
@@ -74,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li class="dropdown">
 	          <a id="realName" href="#" class="dropdown-toggle" data-hover="dropdown" data-close-others="false" role="button" aria-haspopup="true" aria-expanded="false">用户名 <span class="caret"></span></a>
 	          <ul class="dropdown-menu" style="min-width:100px">
-	            <li><a href="#">个人中心</a></li>
+	            <li><a href="#" style="color: #337ab7;">个人中心</a></li>
             	<li role="separator" class="divider"></li>
 	            <li><a href="userManage_logout.action">退出登录</a></li>
 	          </ul>
@@ -87,7 +93,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            <li><a href="uploadVideo.action">视频上传</a></li>
 	          </ul>
 	        </li>
-            <li id="adminManage" style="display:none"><a href="">管理中心</a></li>
+            <li id="adminManage" style="display:none"><a href="admin.action">管理中心</a></li>
           </ul>
           <form id="loginText" style="display:none" class="navbar-form navbar-right hidden-sm" action="userManage_login.action">
           	<input name="username" type="text" class="form-control" placeholder="用户名" />
@@ -98,7 +104,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </div>
     </div>
 
-    <div class="jumbotron masthead">
+    <div class="jumbotron">
       <div class="container">
         <h1>MOOC兰州</h1>
         <h2>随时随地，多终端视频教学，让学习更便捷、简单。</h2>

@@ -52,13 +52,40 @@
         	<result name="aVideoList">/WEB-INF/admin/videoManage.jsp</result>
         	<result name="a_Verify">/WEB-INF/admin/videoVerify.jsp</result>
 		</action>
+        
+		<action name="videoManage_*" class="videoManageAction" method="{1}">
+        	<result name="index" type="redirectAction">index</result>
+        	<result name="teacher" type="redirectAction">videoList_myVideoList</result>
+		</action>
 		
 		<action name="uploadTest" class="videoUploadAction" method="upload" >
         	<result name="uploadFile" type="redirectAction">uploadVideo</result>
 		</action>
+		
+		<action name="commentManage_*" class="commentManageAction" method="{1}">
+			<result name="teacher">/WEB-INF/teacher/commentManage.jsp</result>
+			<result name="admin">/WEB-INF/admin/commentManage.jsp</result>
+			<result name="teacherDelete">/WEB-INF/teacher/commentVerifyDelete.jsp</result>
+			<result name="adminDelete">/WEB-INF/admin/commentVerifyDelete.jsp</result>
+        	<result name="index" type="redirectAction">index</result>
+			<result name="toTeacher" type="redirectAction">commentManage_getTeacherCommentList</result>
+			<result name="toAdmin" type="redirectAction">commentManage_getAdminCommentList</result>
+			<result name="toTeacherDelete" type="redirectAction">commentManage_getTeacherCommentDeleteList</result>
+			<result name="toAdminDelete" type="redirectAction">commentManage_getAdminCommentDeleteList</result>
+		</action>
     </package>
     
     <package name="videosys2_noLogin" extends="struts-default">
+		<action name="videoPlay" class="videoPlayAction" method="playVideoByNum">
+			<result name="play">/WEB-INF/videoPlay/videoPlay.jsp</result>
+			<result name="mPlay">/WEB-INF/mobile/videoPlay/videoPlay.jsp</result>
+			<result name="error" type="redirectAction">
+				<param name="actionName">videoListRead</param>
+				<param name="videoAuthor">${videoAuthor}</param>
+				<param name="message">${message}</param>
+			</result>
+		</action>
+		
 		<action name="index">
 			<result>/index.jsp</result>
 		</action>
@@ -80,17 +107,9 @@
 		
 		<default-interceptor-ref name="adminInterceptor" />
 		
-		<action name="bootstrap">
+		<action name="admin">
 			<result>/WEB-INF/admin/index.jsp</result>
 		</action>
-		
-		<action name="videoWaitVerifyListRead" class="com.hly.videosys.admin.VideoVerifyListReadAction" method="execute">
-			<result>/WEB-INF/admin/videoVerify.jsp</result>
-		</action>	
-	
-		<action name="videoListReadAdmin" class="com.hly.videosys.admin.VideoListForAdminAction" method="execute">
-			<result>/WEB-INF/admin/videoManage.jsp</result>
-		</action>	
 		
 		<action name="commentListReadAdmin" class="com.hly.videosys.admin.CommentListForAdminAction" method="execute">
 			<result name="manage">/WEB-INF/admin/commentManage.jsp</result>
@@ -192,15 +211,7 @@
 			<result name="aVideoList">/WEB-INF/admin/videoManage.jsp</result>
 		</action>
 		
-		<action name="videoPlay" class="videoPlayAction" method="playVideoByNum">
-			<result name="play">/WEB-INF/videoPlay/videoPlay.jsp</result>
-			<result name="mPlay">/WEB-INF/mobile/videoPlay/videoPlay.jsp</result>
-			<result name="error" type="redirectAction">
-				<param name="actionName">videoListRead</param>
-				<param name="videoAuthor">${videoAuthor}</param>
-				<param name="message">${message}</param>
-			</result>
-		</action>
+
 		
 		<action name="login">
 			<result>/WEB-INF/common/Login.jsp</result>

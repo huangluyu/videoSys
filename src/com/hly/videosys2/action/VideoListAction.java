@@ -12,6 +12,7 @@ public class VideoListAction extends BaseAction<Videoinfo> implements ModelDrive
 
 	int page = 1;
 	
+	//老师视频管理
 	public String myVideoList() {
 		List<?> videoList;
 		int pageSum;
@@ -25,6 +26,7 @@ public class VideoListAction extends BaseAction<Videoinfo> implements ModelDrive
 		return "tVideoList";
 	}
 
+	//管理员视频管理
 	public String allVideoList() {
 		List<?> videoList;
 		List<Userinfo> teacherList;

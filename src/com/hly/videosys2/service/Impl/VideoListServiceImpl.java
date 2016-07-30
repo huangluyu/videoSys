@@ -37,29 +37,6 @@ public class VideoListServiceImpl extends BaseServiceImpl<Videoinfo> implements
 	
 	//计算符合条件的视频的总页数
 	public int videoListNumRead(String author, String grade, String subject, String videoName) {
-		/*String sql = "select count(*) as total from 视频表 where 上传者 like ? and 视频年级 like ? and 视频科目 like ? and 视频名称 like ?";
-		PreparedStatement pstmt=JdbcMysql.conn().prepareStatement(sql);
-		if(author == "" || author == null)
-			pstmt.setString(1, "%");
-		else
-			pstmt.setString(1, author);
-		if(grade == "" || grade == null)
-			pstmt.setString(2, "%");
-		else
-			pstmt.setString(2, grade);
-		if(subject == "" || subject == null)
-			pstmt.setString(3, "%");
-		else
-			pstmt.setString(3, subject);
-		if(videoName == null || videoName.equals("all"))
-			pstmt.setString(4, "%");
-		else
-			pstmt.setString(4, "%" + videoName + "%");
-		ResultSet rs=pstmt.executeQuery();
-		if(rs.next())
-			return (rs.getInt("total") - 1) / 10 + 1;
-		else
-			return 0;*/
 		String hql = "select count(v) from Videoinfo v where v.uploadByUser like :teacher and v.videoGrade like :grade and v.videoSubject like :subject and v.videoName like :videoName";
 		if(author == null || author.equals("all"))
 			author = "%";
@@ -89,5 +66,13 @@ public class VideoListServiceImpl extends BaseServiceImpl<Videoinfo> implements
 		        .setMaxResults(Page * 10)
 		        .list();
 	}
-	
+
+	//找出一个老师的视频列表
+	@Override
+	public List<Integer> getVideoListByUser(String username) {
+		String hql = "select v.videoNum from Videoinfo v where v.uploadByUser = :uploadByUser";
+		return getSession().createQuery(hql)
+				.setString("uploadByUser", username)
+				.list();
+	}
 }

@@ -30,7 +30,7 @@ public class CommentListServiceImpl extends BaseServiceImpl<Commentlist> impleme
 		String hql = "insert into 留言列表 values(null,?,?,?,?,?,0)";
 	}
 	
-	//找出特定某个视频的所有留言
+	//找出特定某个视频的所有留言,排除隐藏的,用于视频播放界面
 	@SuppressWarnings("unchecked")
 	public List<Commentlist> commentReadByVideoNum(Integer videoNum){
 		String hql = "from Commentlist c where c.videoNum = :videoNum and c.commentShowSet = 1 order by commentNum desc";
@@ -39,14 +39,34 @@ public class CommentListServiceImpl extends BaseServiceImpl<Commentlist> impleme
 				.list();
 	}
 	
-	//找出符合条件的所有留言
+	//找出某个老师符合条件的所有留言
 	@SuppressWarnings("unchecked")
-	public List<Commentlist> commentReadByCondition(Integer videoNum, String commentByUser, String commentShowSet, int page) {
-		String hql = "from Commentlist c where c.videoNum like :videoNum and c.commentShowSet = :commentShowSet and c.commentByUser = :commentByUser order by commentNum desc";
+	@Override
+	public List<Commentlist> getTeacherCommentList(String username, String commentByUser, String commentShowSet, int page){
+		String hql = "from Commentlist c where c.videoNum = any(select v.videoNum from Videoinfo v where v.uploadByUser = :uploadByUser) and c.commentShowSet = :commentShowSet and c.commentByUser like :commentByUser order by c.commentNum desc";
 		if(commentByUser == null || commentByUser.equals(""))
 			commentByUser = "%";
 		return getSession().createQuery(hql)
-				.setInteger("videoNum", videoNum)
+				.setString("uploadByUser", username)
+				.setString("commentByUser", commentByUser)
+				.setString("commentShowSet", commentShowSet)
+		        .setFirstResult((page - 1) * 10)
+		        .setMaxResults(page * 10)
+				.list();
+	}
+	
+	//找出符合条件的所有留言
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Commentlist> commentReadByCondition(String videoNum, String commentByUser, String commentShowSet, int page) {
+		String hql = "from Commentlist c where c.videoNum like :videoNum and c.commentShowSet = :commentShowSet and c.commentByUser like :commentByUser order by commentNum desc";
+		if(videoNum == null || videoNum.equals(""))
+			videoNum = "%";
+		
+		if(commentByUser == null || commentByUser.equals(""))
+			commentByUser = "%";
+		return getSession().createQuery(hql)
+				.setString("videoNum", videoNum)
 				.setString("commentByUser", commentByUser)
 				.setString("commentShowSet", commentShowSet)
 		        .setFirstResult((page - 1) * 10)
@@ -56,6 +76,7 @@ public class CommentListServiceImpl extends BaseServiceImpl<Commentlist> impleme
 
 
 	//找出符合条件的所有留言的个数
+	@Override
 	public int commentListRead(Integer videoNum, String commentByUser, String commentShowSet) {
 		/*String sql = "select count(*) as total from 留言列表 where 视频编号 like ? and 留言用户 like ? and 显示设置 like ?";
 		PreparedStatement pstmt=JdbcMysql.conn().prepareStatement(sql);

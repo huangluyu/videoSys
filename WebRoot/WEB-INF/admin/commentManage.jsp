@@ -68,17 +68,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="bootstrap.action">管理中心 <span class="sr-only">(current)</span></a></li>
+            <li><a href="admin.action">管理中心 <span class="sr-only">(current)</span></a></li>
             <li><a href="#">发布活动</a></li>
             <li><a href="#">留言中心</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="videoListRead.action?key=2">视频管理</a></li>
-            <li><a href="videoWaitVerifyListRead.action">视频审核</a></li>
+            <li><a href="videoList_allVideoList.action">视频管理</a></li>
+            <li><a href="videoList_adminVerifyVideoList.action">视频审核</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li class="active"><a href="">评论管理</a></li>
-            <li><a href="commentListReadAdmin.action?keyIsShow=0">恢复评论</a></li>
+            <li><a href="commentManage_getAdminCommentDeleteList.action">恢复评论</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="userListReadAdmin.action">用户中心</a></li>
@@ -88,11 +88,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         
           <h2 class="sub-header">评论列表</h2>
-          	<form class="form-inline" action="commentListReadAdmin" methor="post">
+          	<form class="form-inline" action="commentManage_getAdminCommentList.action" methor="post">
           		<input type="hidden" name="keyIsShow" value="1" />
           		<div class="form-group">
 					<label for="exampleInputEmail1">用户名:</label>
-					<input type="text" class="form-control" name="username" placeholder="" style="width:10em">
+					<input type="text" class="form-control" name="commentByUser" placeholder="" style="width:10em">
 				</div>
           		<div class="form-group">
 					<label for="exampleInputEmail1">视频编号:</label>
@@ -119,17 +119,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </tr>
               </thead>
               <tbody>
-                <s:iterator id="comment" value="commentListForAdmin" status="L">
+				<c:forEach items="${request.commentList }" var="commentList">
 					<tr>
-						<td><s:property value="#comment.commentNum"/></td>
-						<td><s:property value="#comment.commentUserRealName"/></td>
-						<td><s:property value="#comment.commentUser"/></td>
-						<td><s:property value="#comment.videoComment"/></td>
-						<td><s:property value="#comment.commentTime"/></td>
-						<td><s:property value="#comment.videoNum"/>&nbsp(<a href="videoPlay?videoNum=<s:property  value="#comment.videoNum" />">播放</a>)</td>
-						<td><a href="commentHide.action?commentNum=<s:property value="#comment.commentNum"/>&isShow=0"><button type="button" class="btn btn-primary btn-xs btn-danger">删除</button></a>&nbsp|&nbsp<a>禁言</a></td>
-					</tr>
-				</s:iterator>
+              			<td>${commentList.commentNum }</td>
+              			<td>${commentList.commentTarget }</td>
+              			<td>${commentList.commentByUser }</td>
+              			<td>${commentList.commentContent }</td>
+              			<td>${commentList.commentTime }</td>
+              			<td>${commentList.videoNum }&nbsp(<a href="videoPlay?videoNum=${commentList.videoNum }">播放</a>)</td>
+              			<td>
+              				<a href="commentManage_commentHide.action?commentNum=${commentList.commentNum }">
+              					<button type="button" class="btn btn-primary btn-xs btn-danger">删除</button>
+              				</a>&nbsp|&nbsp<a>禁言</a>
+           				</td>
+              		</tr>
+              	</c:forEach>
               </tbody>
             </table>
           </div>

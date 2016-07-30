@@ -87,11 +87,16 @@
 	<bean id="videoListService" class="com.hly.videosys2.service.Impl.VideoListServiceImpl" parent="baseService" />
 	<bean id="commentListService" class="com.hly.videosys2.service.Impl.CommentListServiceImpl" parent="baseService" />
 	<bean id="videoManageService" class="com.hly.videosys2.service.Impl.VideoManageServiceImpl" parent="baseService" />
+	<bean id="commentManageService" class="com.hly.videosys2.service.Impl.CommentManageServiceImpl" parent="baseService" />
+
+	
 	
  	<bean id="indexAction" class="com.hly.videosys2.action.IndexAction" scope="prototype" parent="baseAction" />
  	<bean id="userManageAction" class="com.hly.videosys2.action.UserManageAction" scope="prototype" parent="baseAction" />
  	<bean id="videoListAction" class="com.hly.videosys2.action.VideoListAction" scope="prototype" parent="baseAction" />
  	<bean id="videoPlayAction" class="com.hly.videosys2.action.VideoPlayAction" scope="prototype" parent="baseAction" />
 	<bean id="videoUploadAction" class="com.hly.videosys2.action.VideoUploadAction" scope="prototype" parent="baseAction" />
+	<bean id="videoManageAction" class="com.hly.videosys2.action.VideoManageAction" scope="prototype" parent="baseAction" />
+	<bean id="commentManageAction" class="com.hly.videosys2.action.CommentManageAction" scope="prototype" parent="baseAction" />
 	
 </beans>

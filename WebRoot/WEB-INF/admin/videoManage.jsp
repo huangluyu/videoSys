@@ -68,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="bootstrap.action">管理中心 <span class="sr-only">(current)</span></a></li>
+            <li><a href="admin.action">管理中心 <span class="sr-only">(current)</span></a></li>
             <li><a href="#">发布活动</a></li>
             <li><a href="#">留言中心</a></li>
           </ul>
@@ -77,8 +77,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="videoList_adminVerifyVideoList.action">视频审核</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="commentListReadAdmin.action?keyIsShow=1">评论管理</a></li>
-            <li><a href="commentListReadAdmin.action?keyIsShow=0">恢复评论</a></li>
+            <li><a href="commentManage_getAdminCommentList.action">评论管理</a></li>
+            <li><a href="commentManage_getAdminCommentDeleteList.action">恢复评论</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="userListReadAdmin.action">用户中心</a></li>

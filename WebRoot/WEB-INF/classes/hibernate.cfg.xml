@@ -12,8 +12,8 @@
 		<property name="myeclipse.connection.profile">
 			VideoSys
 		</property>
-		<property name="hibernate.show_sql">true</property><!-- 配置显示sql语句 -->
-		<property name="format_sql">true</property>
+		<!-- <property name="hibernate.show_sql">true</property>
+		<property name="format_sql">true</property>  -->
   
 		<mapping class="com.hly.videosys2.entity.Userinfo" />
 		<mapping resource="com/hly/videosys2/entity/Userinfo.hbm.xml" />

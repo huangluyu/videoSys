@@ -31,63 +31,29 @@ public class VideoManageServiceImpl extends BaseServiceImpl<Videoinfo>
 				.uniqueResult();
 	}
 	
-	//
+	//更新视频状态
 	@Override
-	public void update(Videoinfo videoinfo) {
-		Session session = getSession();
-		session.beginTransaction(); //关键1
-        session.update(videoinfo);
-		session.getTransaction().commit(); //关键2
+	public int updateVideoinfo(Videoinfo model ,Videoinfo videoinfo){
+		System.out.println("videoNum:" + model.getVideoNum() + " grade:" + model.getVideoGrade() + " subject:" + model.getVideoSubject());
+
+		if(model.getVideoName() != null && !model.getVideoName().equals(""))
+			videoinfo.setVideoName(model.getVideoName());
+		if(model.getVideoGrade() != null && !model.getVideoGrade().equals(""))
+			videoinfo.setVideoGrade(model.getVideoGrade());
+		if(model.getVideoSubject() != null && !model.getVideoSubject().equals(""))
+			videoinfo.setVideoSubject(model.getVideoSubject());
+		if(new Integer(model.getVideoPrice()) >= 0)
+			videoinfo.setVideoPrice(model.getVideoPrice());
+		update(videoinfo);
+		return 1;
 	}
 	
-	public int uploadVideo(Videoinfo videoinfo){
-		
-		
-		return 0;
-		
-	}
-	
-	//新增一条Videoinfo表的记录
-	@Override
-	public int videoInfoAdd(String videoName,String videoUrl,String username,String uploadtime,String videoTime,String grade,String subject)throws Exception{
-		String sql="insert into 视频表 values(null,?,1,?,?,?,-2,?,?,?,0,0)";
-		PreparedStatement pstmt=JdbcMysql.conn().prepareStatement(sql);
-		pstmt.setString(1, videoName);
-		pstmt.setString(2, videoTime);
-		pstmt.setString(3, uploadtime);
-		pstmt.setString(4, videoUrl);
-		pstmt.setString(5, username);
-		pstmt.setString(6, grade);
-		pstmt.setString(7, subject);
-		return pstmt.executeUpdate();
-	}
-	
-	//
-	public static int addUploadState(String videoUrl,String uploadState) throws SQLException{
-		String sql="insert into 视频上传表 values(?,?)";
-		PreparedStatement pstmt=JdbcMysql.conn().prepareStatement(sql);
-		pstmt.setString(1, videoUrl);
-		pstmt.setString(2, uploadState);
-		return pstmt.executeUpdate();
-	}
-	
-	//更新视频上传状态信息
-	public int updateUploadState(String videoUrl,String uploadState){
-		/*String sql="update video set 上传状态 = ? where 视频地址 = ?";
-		PreparedStatement pstmt=JdbcMysql.conn().prepareStatement(sql);
-		pstmt.setString(2, videoUrl);
-		pstmt.setString(1, uploadState);
-		return pstmt.executeUpdate();*/
-		String hql = "update Videoinfo v set v.videoUploadInfo = :videoUploadInfo where v.videoUrl = :videoUrl";
-		return getSession().createQuery(hql).executeUpdate();
-	}
-	
-	//设置视频转码成功
-	public int updateVideoState(String videoUrl){
-		/*String sql="update 视频表 set 视频价格 = 0 where 视频地址 = ?";
-		PreparedStatement pstmt=JdbcMysql.conn().prepareStatement(sql);
-		pstmt.setString(1, videoUrl);
-		return pstmt.executeUpdate();*/
-		return 0;
+	//设置审核状态,通过为1,拒绝为-1
+	public void updateVideoExamineState(Integer videoNum, String videoExamineState) {
+		String hql = "update Videoinfo v set v.videoExamineState = :videoExamineState where v.videoNum = :videoNum";
+		getSession().createQuery(hql)
+			.setInteger("videoNum", videoNum)
+			.setString("videoExamineState", videoExamineState)
+			.executeUpdate();
 	}
 }

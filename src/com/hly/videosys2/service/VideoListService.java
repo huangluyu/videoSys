@@ -11,4 +11,6 @@ public interface VideoListService extends BaseService<Videoinfo> {
 	public int videoListNumRead(String author, String grade, String subject, String videoName);
 
 	List<Videoinfo> videoListWaitVerify(int PageSum);
+
+	List<Integer> getVideoListByUser(String username);
 }
