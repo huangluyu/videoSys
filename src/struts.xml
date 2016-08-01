@@ -38,6 +38,7 @@
 				<param name="username">test</param>
 				<param name="password">test</param>
 			</result>
+        	<result name="index" type="redirectAction">index</result>
 		</global-results>
 	</package>
     
@@ -47,15 +48,14 @@
         </action>
         
 		<action name="videoList_*" class="videoListAction" method="{1}">
-        	<result name="index" type="redirectAction">index</result>
         	<result name="tVideoList">/WEB-INF/teacher/videoManage.jsp</result>
         	<result name="aVideoList">/WEB-INF/admin/videoManage.jsp</result>
         	<result name="a_Verify">/WEB-INF/admin/videoVerify.jsp</result>
 		</action>
         
 		<action name="videoManage_*" class="videoManageAction" method="{1}">
-        	<result name="index" type="redirectAction">index</result>
         	<result name="teacher" type="redirectAction">videoList_myVideoList</result>
+        	<result name="adminVerify" type="redirectAction">videoList_adminVerifyVideoList</result>
 		</action>
 		
 		<action name="uploadTest" class="videoUploadAction" method="upload" >
@@ -67,7 +67,6 @@
 			<result name="admin">/WEB-INF/admin/commentManage.jsp</result>
 			<result name="teacherDelete">/WEB-INF/teacher/commentVerifyDelete.jsp</result>
 			<result name="adminDelete">/WEB-INF/admin/commentVerifyDelete.jsp</result>
-        	<result name="index" type="redirectAction">index</result>
 			<result name="toTeacher" type="redirectAction">commentManage_getTeacherCommentList</result>
 			<result name="toAdmin" type="redirectAction">commentManage_getAdminCommentList</result>
 			<result name="toTeacherDelete" type="redirectAction">commentManage_getTeacherCommentDeleteList</result>
@@ -92,6 +91,7 @@
 		
         <action name="userManage_*" class="userManageAction" method="{1}">
         	<result name="index" type="redirectAction">index</result>
+        	<result name="admin">/WEB-INF/admin/userManage.jsp</result>
         </action>
     </package>
     

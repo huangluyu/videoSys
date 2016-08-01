@@ -49,11 +49,13 @@ public class VideoManageServiceImpl extends BaseServiceImpl<Videoinfo>
 	}
 	
 	//设置审核状态,通过为1,拒绝为-1
-	public void updateVideoExamineState(Integer videoNum, String videoExamineState) {
-		String hql = "update Videoinfo v set v.videoExamineState = :videoExamineState where v.videoNum = :videoNum";
+	@Override
+	public void updateVideoExamineState(Integer videoNum, String videoExamineState, String videoPrice) {
+		String hql = "update Videoinfo v set v.videoExamineState = :videoExamineState , v.videoPrice = :videoPrice where v.videoNum = :videoNum";
 		getSession().createQuery(hql)
 			.setInteger("videoNum", videoNum)
 			.setString("videoExamineState", videoExamineState)
+			.setString("videoPrice", videoPrice)
 			.executeUpdate();
 	}
 }

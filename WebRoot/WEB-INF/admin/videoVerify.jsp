@@ -85,7 +85,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="commentListReadAdmin.action?keyIsShow=0">恢复评论</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="userListReadAdmin.action">用户中心</a></li>
+            <li><a href="userManage_getUserList.action">用户中心</a></li>
             <li><a href="">用户管理</a></li>
           </ul>
         </div>
@@ -114,7 +114,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               			<td>${videoinfo.videoGrade }|${videoinfo.videoSubject }</td>
               			<td>${videoinfo.videoLength }秒</td>
               			<td>${videoinfo.videoExamineState }</td>
-              			<td><a href="videoPlay?videoNum=${videoinfo.videoNum }">播放</a>&nbsp|&nbsp<a>通过</a>&nbsp|&nbsp<a>拒绝</a></td>
+              			<td>
+              				<a href="videoPlay.action?videoNum=${videoinfo.videoNum }">播放</a>&nbsp|&nbsp
+              				<a href="videoManage_passVideoExamine.action?videoNum=${videoinfo.videoNum }">通过</a>&nbsp|&nbsp
+              				<a href="videoManage_nopassVideoExamine.action?videoNum=${videoinfo.videoNum }">拒绝</a>
+              			</td>
               		</tr>
               	</c:forEach>
               </tbody>

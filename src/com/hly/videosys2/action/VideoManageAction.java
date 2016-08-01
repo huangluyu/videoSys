@@ -13,7 +13,7 @@ public class VideoManageAction extends BaseAction<Videoinfo> implements
 	private String isShow;
 	
 	//更新视频信息
-	public String updateVideoinfo(){
+	public String updateVideoinfo() {
 		//权限判断
 		Userinfo myinfo = (Userinfo) session.get("userinfo");
 		Videoinfo videoinfo = videoManageService.getInfoByVideoNum(model.getVideoNum());
@@ -27,6 +27,22 @@ public class VideoManageAction extends BaseAction<Videoinfo> implements
 		if(videoinfo != null)
 			videoManageService.updateVideoinfo(model, videoinfo);
 		return "teacher";
+	}
+	
+	//通过视频审核
+	public String passVideoExamine() {
+		Userinfo myinfo = (Userinfo) session.get("userinfo");
+		if(myinfo.getUserAuthority() == 3)
+			videoManageService.updateVideoExamineState(model.getVideoNum(), "1", "0");
+		return "adminVerify";
+	}
+	
+	//不通过视频审核
+	public String nopassVideoExamine() {
+		Userinfo myinfo = (Userinfo) session.get("userinfo");
+		if(myinfo.getUserAuthority() == 3)
+			videoManageService.updateVideoExamineState(model.getVideoNum(), "-1", "-2");
+		return "adminVerify";
 	}
 
 	public String getIsShow() {

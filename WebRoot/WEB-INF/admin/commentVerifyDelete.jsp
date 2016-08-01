@@ -81,7 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li class="active"><a href="">恢复评论</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="userListReadAdmin.action">用户中心</a></li>
+            <li><a href="userManage_getUserList.action">用户中心</a></li>
             <li><a href="">用户管理</a></li>
           </ul>
         </div>

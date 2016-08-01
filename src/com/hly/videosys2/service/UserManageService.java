@@ -6,9 +6,12 @@ import com.hly.videosys2.entity.Userinfo;
 
 public interface UserManageService extends BaseService<Userinfo>{
 	
-	public Userinfo loginVerify(Userinfo user);
+	Userinfo loginVerify(Userinfo user);
 	
-	public List<Userinfo> getTeacherList() ;
+	List<Userinfo> getTeacherList() ;
 
-	public String getRealName(String commentByUser);
+	String getRealName(String commentByUser);
+	
+	List<Userinfo> getUserList(String username, String realName, String email,
+			String mobilePhoneNum, String userAuthority, int page);
 }

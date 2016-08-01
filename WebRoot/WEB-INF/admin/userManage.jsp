@@ -77,30 +77,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="videoList_adminVerifyVideoList.action">视频审核</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="commentListReadAdmin.action?keyIsShow=1">评论管理</a></li>
-            <li><a href="commentListReadAdmin.action?keyIsShow=0">恢复评论</a></li>
+            <li><a href="commentManage_getAdminCommentList.action">评论管理</a></li>
+            <li><a href="commentManage_getAdminCommentDeleteList.action">恢复评论</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="">用户中心</a></li>
-            <li><a href="">用户管理</a></li>
+            <li class="active"><a href="">用户管理</a></li>
+            <li><a href="">封禁列表</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
           <h2 class="sub-header">用户列表</h2>
-          	<form class="form-inline" action="userListReadAdmin" methor="post">
-          		<input type="hidden" name="keyIsShow" value="1" />
+          	<form class="form-inline" action="userManage_getUserList.action" methor="post">
           		<div class="form-group">
 					<label for="">用户名:</label>
-					<input type="text" class="form-control" name="username" placeholder="" style="width:10em">
+					<input type="text" class="form-control" name="username" style="width:10em">
 				</div>
           		<div class="form-group">
 					<label for="">姓名:</label>
-					<input type="text" class="form-control" name="realName" placeholder="" style="width:10em">
+					<input type="text" class="form-control" name="realName" style="width:10em">
 				</div>
           		<div class="form-group">
 					<label for="">身份:</label>
-					<input type="text" class="form-control" name="authority" placeholder="" style="width:5em">
+					<input type="text" class="form-control" name="userAuthority" style="width:5em">
+				</div>
+          		<div class="form-group">
+					<label for="">邮箱:</label>
+					<input type="text" class="form-control" name="email" style="width:10em">
+				</div>
+          		<div class="form-group">
+					<label for="">手机:</label>
+					<input type="text" class="form-control" name="mobilePhoneNum" style="width:10em">
 				</div>
           		<div class="form-group">
           			<label for="">第</label>
@@ -116,23 +123,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <th align="center">用户名</th>
                   <th align="center">姓名</th>
                   <th align="center">身份</th>
+                  <th align="center">邮箱</th>
+                  <th align="center">手机</th>
                   <th align="center">积分</th>
                   <th align="center">管理操作</th>
                 </tr>
               </thead>
               <tbody>
-                <s:iterator id="user" value="userListForAdmin" status="L">
-					<tr>
-						<td><s:property value="#user.username"/></td>
-						<td><s:property value="#user.realName"/></td>
-						<td><s:property value="#user.authority"/></td>
-						<td><s:property value="#user.money"/></td>
+                <c:forEach items="${request.userList }" var="userList">
+                	<tr>
+                		<td>${userList.username }</td>
+                		<td>${userList.realName }</td>
+                		<td>${userList.userAuthority }</td>
+                		<td>${userList.email }</td>
+                		<td>${userList.mobilePhoneNum }</td>
+                		<td>${userList.money }</td>
 						<td><a href="banUser.action?username=<s:property value="#user.username"/>&level=1"><button type="button" class="btn btn-primary btn-xs btn-danger">封禁</button></a>
 							&nbsp|&nbsp
 							<a href="banUser.action?username=<s:property value="#user.username"/>&level=3">禁言</a>
 						</td>
-					</tr>
-				</s:iterator>
+                	</tr>
+                </c:forEach>
               </tbody>
             </table>
           </div>

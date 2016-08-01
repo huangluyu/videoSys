@@ -41,6 +41,7 @@ public class VideoListAction extends BaseAction<Videoinfo> implements ModelDrive
 		return "aVideoList";
 	}
 	
+	//待审核视频列表
 	public String adminVerifyVideoList() {
 		List<?> videoList;
 		

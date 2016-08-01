@@ -42,6 +42,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
+  
+  <style type="text/css">  
+div.demo {  
+    padding: 20px;  
+    border: 1px solid #E5E5E5;  
+    margin-bottom: 20px;  
+    background-color: #FFFFFF;  
+}  
+</style>  
+
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
@@ -79,6 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h2 class="sub-header">视频上传</h2>
+          	<div class="demo">
           	<input type="file" name="uploadifive" id="uploadifive" style="margin:0px 0px 10px 0px"/>
           	<%-- <form class="form-inline" action="videoList_myVideoList.action" method="post">
           		<div class="form-group">
@@ -152,6 +163,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div id="fileQueue" style="margin:0px 0px 10px 0px"></div>
         <button onclick="startUpload()" class="btn">开始上传</button>&nbsp;
 		<button onclick="cancelUpload()" class="btn">取消所有上传</button>
+		</div>
         </div>
       </div>
     </div>

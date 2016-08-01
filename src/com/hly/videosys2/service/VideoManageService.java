@@ -10,6 +10,7 @@ public interface VideoManageService extends BaseService<Videoinfo> {
 
 	int updateVideoinfo(Videoinfo model, Videoinfo videoinfo);
 
-	void updateVideoExamineState(Integer videoNum, String videoExamineState);
+	void updateVideoExamineState(Integer videoNum, String videoExamineState,
+			String videoPrice);
 
 }

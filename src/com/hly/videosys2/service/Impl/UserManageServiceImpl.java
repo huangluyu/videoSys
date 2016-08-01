@@ -22,12 +22,14 @@ public class UserManageServiceImpl extends BaseServiceImpl<Userinfo> implements 
 	}
 	
 	//获取所有老师列表
+	@Override
 	public List<Userinfo> getTeacherList() {
 		String hql = "from Userinfo u where u.userAuthority = 2";
 		return getSession().createQuery(hql).list();
 	}
 	
 	//获得真实姓名
+	@Override
 	public String getRealName(String username) {
 		String hql = "select u.realName from Userinfo u where u.username = :username";
 		return (String) getSession().createQuery(hql)
@@ -35,9 +37,23 @@ public class UserManageServiceImpl extends BaseServiceImpl<Userinfo> implements 
 				.uniqueResult();
 	}
 	
-	/*public static ResultSet getTeacherList()  throws Exception {
-		String sql="select * from userinfo where userAuthority = 2";
-		PreparedStatement pstmt=JdbcMysql.conn().prepareStatement(sql);
-		return pstmt.executeQuery();
-	}*/
+	//获得用户列表
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Userinfo> getUserList(String username, String realName, String email, String mobilePhoneNum, String userAuthority, int page) {
+		String hql = "from Userinfo u where u.username = :username "
+				+ "or u.realName = :realName "
+				+ "or u.email = :email "
+				+ "or u.mobilePhoneNum = :mobilePhoneNum "
+				+ "or u.userAuthority like :userAuthority";
+		return getSession().createQuery(hql)
+				.setString("username", username)
+				.setString("realName",realName )
+				.setString("email",email )
+				.setString("mobilePhoneNum", mobilePhoneNum)
+				.setString("userAuthority", userAuthority)
+		        .setFirstResult((page - 1) * 10)
+		        .setMaxResults(page * 10)
+				.list();
+	}
 }
