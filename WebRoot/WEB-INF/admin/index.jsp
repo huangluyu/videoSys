@@ -44,6 +44,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <![endif]-->
   </head>
 
+<style>
+.navbar-inverse {
+  background-color: #4879bd;
+}
+</style>
+
   <body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">

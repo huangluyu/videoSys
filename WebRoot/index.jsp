@@ -21,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- Bootstrap core CSS -->
     <link href="${pageContext.request.contextPath}/dist/css/bootstrap.min.css" rel="stylesheet">
 
-	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
 	
     <!-- Custom styles for this template -->
     <link href="${pageContext.request.contextPath}/css/dashboard.css" rel="stylesheet">
@@ -44,12 +44,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			-webkit-border-radius: 9px;
 			-moz-border-radius: 9px;
 		}
+		
 		.jumbotron{ 
-			/* background:url(http://202.201.12.118:8080/video/default/nightsky.jpg);  */
 			background-color: #4879bd;
 			color: #FFFFFF;
 		} 
 		
+		.title{ 
+		    width: 100%;
+		    word-break: break-all;
+		    text-overflow: ellipsis;
+		    display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+		    -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+		    -webkit-line-clamp: 2; /** 显示的行数 **/
+		    overflow: hidden;  /** 隐藏超出的内容 **/
+		}
 	</style>
 	
   <body>
@@ -107,7 +116,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="jumbotron">
       <div class="container">
         <h1>MOOC兰州</h1>
-        <h2>随时随地，多终端视频教学，让学习更便捷、简单。</h2>
+        <h2 class="title">随时随地，多终端视频教学，让学习更便捷、简单。</h2>
       </div>
     </div>
     
@@ -119,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div style="padding:2%">
 						<a href="videoPlay?videoNum=${videoinfo.videoNum }">
 							<img src="http://202.201.12.118:8080/video/${videoinfo.videoUrl }.jpg" alt="${videoinfo.videoName }" width="100%">
-							<span >${videoinfo.videoName }</span><br/>
+							<span class="title">${videoinfo.videoName }</span><br/>
 							<span>${videoinfo.uploadByUser }</span>
 							<span style="float:right">播放数:${videoinfo.videoPlayTimes }</span>
 						</a>
@@ -129,12 +138,54 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
     	<!-- 高一最热视频 -->
     	<div class="row">
+		  <div class="col-md-3 col-sm-6 col-xs-6">
+		    <div class="thumbnail">
+		      <img src="http://202.201.12.118:8080/video/20160702191544792.jpg" alt="...">
+		      <div class="caption">
+		        <h3>subnautica蓝图介绍</h3>
+		        <p>没有介绍</p>
+		        <p><a href="#" class="btn btn-primary" role="button">播放</a> <a href="#" class="btn btn-default" role="button">购买</a></p>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="col-md-3 col-sm-6 col-xs-6">
+		    <div class="thumbnail">
+		      <img src="http://202.201.12.118:8080/video/20160702191544792.jpg" alt="...">
+		      <div class="caption">
+		        <h3>subnautica蓝图介绍</h3>
+		        <p>没有介绍</p>
+		        <p><a href="#" class="btn btn-primary" role="button">播放</a> <a href="#" class="btn btn-default" role="button">购买</a></p>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="col-md-3 col-sm-6 col-xs-6">
+		    <div class="thumbnail">
+		      <img src="http://202.201.12.118:8080/video/20160702191544792.jpg" alt="...">
+		      <div class="caption">
+		        <h3>subnautica蓝图介绍</h3>
+		        <p>没有介绍</p>
+		        <p><a href="#" class="btn btn-primary" role="button">播放</a> <a href="#" class="btn btn-default" role="button">购买</a></p>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="col-md-3 col-sm-6 col-xs-6">
+		    <div class="thumbnail">
+		      <img src="http://202.201.12.118:8080/video/20160702191544792.jpg" alt="...">
+		      <div class="caption">
+		        <h3>subnautica蓝图介绍</h3>
+		        <p>没有介绍</p>
+		        <p><a href="#" class="btn btn-primary" role="button">播放</a> <a href="#" class="btn btn-default" role="button">购买</a></p>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+    	<div class="row">
     		<c:forEach items="${applicationScope.grade1List }" var="videoinfo">
 				<div class="col-md-3 col-sm-6 col-xs-6">
 					<div style="padding:2%">
 						<a href="videoPlay?videoNum=${videoinfo.videoNum }">
 							<img src="http://202.201.12.118:8080/video/${videoinfo.videoUrl }.jpg" alt="${videoinfo.videoName }" width="100%">
-							<span >${videoinfo.videoName }</span><br/>
+							<span class="title" >${videoinfo.videoName }</span><br/>
 							<span>${videoinfo.uploadByUser }</span>
 							<span style="float:right">播放数:${videoinfo.videoPlayTimes }</span>
 						</a>
@@ -149,7 +200,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div style="padding:2%">
 						<a href="videoPlay?videoNum=${videoinfo.videoNum }">
 							<img src="http://202.201.12.118:8080/video/${videoinfo.videoUrl }.jpg" alt="${videoinfo.videoName }" width="100%">
-							<span >${videoinfo.videoName }</span><br/>
+							<span class="title" >${videoinfo.videoName }</span><br/>
 							<span>${videoinfo.uploadByUser }</span>
 							<span style="float:right">播放数:${videoinfo.videoPlayTimes }</span>
 						</a>
@@ -164,7 +215,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div style="padding:2%">
 						<a href="videoPlay?videoNum=${videoinfo.videoNum }">
 							<img src="http://202.201.12.118:8080/video/${videoinfo.videoUrl }.jpg" alt="${videoinfo.videoName }" width="100%">
-							<span >${videoinfo.videoName }</span><br/>
+							<span class="title" >${videoinfo.videoName }</span><br/>
 							<span>${videoinfo.uploadByUser }</span>
 							<span style="float:right">播放数:${videoinfo.videoPlayTimes }</span>
 						</a>

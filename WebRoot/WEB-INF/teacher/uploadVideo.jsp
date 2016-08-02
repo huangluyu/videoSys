@@ -50,6 +50,10 @@ div.demo {
     margin-bottom: 20px;  
     background-color: #FFFFFF;  
 }  
+
+.navbar-inverse {
+  background-color: #4879bd;
+}
 </style>  
 
   <body>

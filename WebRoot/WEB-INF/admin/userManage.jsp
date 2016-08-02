@@ -138,9 +138,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 		<td>${userList.email }</td>
                 		<td>${userList.mobilePhoneNum }</td>
                 		<td>${userList.money }</td>
-						<td><a href="banUser.action?username=<s:property value="#user.username"/>&level=1"><button type="button" class="btn btn-primary btn-xs btn-danger">封禁</button></a>
+						<td>
+							<a href="userManage_banUser.action?username=${userList.username }&banLevel=1&durationTime=1">
+								<button type="button" class="btn btn-primary btn-xs btn-danger">封禁</button>
+							</a>
 							&nbsp|&nbsp
-							<a href="banUser.action?username=<s:property value="#user.username"/>&level=3">禁言</a>
+							<a href="userManage_banUser.action?username=${userList.username }&banLevel=2&durationTime=1">禁言</a>
 						</td>
                 	</tr>
                 </c:forEach>

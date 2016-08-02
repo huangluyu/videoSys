@@ -27,4 +27,5 @@ public class CommentManageServiceImpl extends BaseServiceImpl<Commentlist>
 				.setInteger("commentNum", commentNum)
 				.uniqueResult();
 	}
+	
 }

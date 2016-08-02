@@ -92,6 +92,8 @@
         <action name="userManage_*" class="userManageAction" method="{1}">
         	<result name="index" type="redirectAction">index</result>
         	<result name="admin">/WEB-INF/admin/userManage.jsp</result>
+        	<result name="adminUser" type="redirectAction">userManage_getUserList.action</result>
+        	<result name="teacher" type="redirectAction">commentManage_getTeacherCommentList.action</result>
         </action>
     </package>
     

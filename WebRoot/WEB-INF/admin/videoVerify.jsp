@@ -81,8 +81,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li class="active"><a href="">视频审核</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="commentListReadAdmin.action?keyIsShow=1">评论管理</a></li>
-            <li><a href="commentListReadAdmin.action?keyIsShow=0">恢复评论</a></li>
+            <li><a href="commentManage_getAdminCommentList.action">评论管理</a></li>
+            <li><a href="commentManage_getAdminCommentDeleteList.action">恢复评论</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="userManage_getUserList.action">用户中心</a></li>

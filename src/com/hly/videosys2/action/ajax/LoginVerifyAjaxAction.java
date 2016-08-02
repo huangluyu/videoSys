@@ -25,18 +25,17 @@ public class LoginVerifyAjaxAction extends BaseAction<Userinfo> implements
 		model = (Userinfo) session.get("userinfo");
 		
 		if(model != null)
-		{
 			key = "{\"username\":\"" + model.getRealName() + "\",\"money\":\"" + model.getMoney() + "\",\"authority\":\"" + model.getUserAuthority() + "\"}";	
-		} else
+		else
 			key = "{\"username\":\"null\"}";
-			System.out.println(key);
+		System.out.println(key);
 	    try 
 	    {  
 	    	inputStream = new ByteArrayInputStream(key.getBytes("UTF-8"));  
 	    }  
 	    catch (UnsupportedEncodingException e)  
 	    {  
-	        // TODO Auto-generated catch block  
+	        // TODO Auto-generated catch block
 	        e.printStackTrace();  
 	    }  
 	    return "isExist";  

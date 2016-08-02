@@ -39,6 +39,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
+  
+<style>
+.navbar-inverse {
+  background-color: #4879bd;
+}
+
+</style>
 
   <body>
 	<div class="navbar navbar-inverse navbar-fixed-top">

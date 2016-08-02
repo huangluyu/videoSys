@@ -1,12 +1,15 @@
 package com.hly.videosys2.action;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.mapping.Map;
 
+import com.hly.videosys.comment.CommentList;
 import com.hly.videosys2.entity.*;
 import com.hly.videosys2.service.CommentListService;
 import com.opensymphony.xwork2.ModelDriven;
@@ -73,21 +76,46 @@ public class CommentManageAction extends BaseAction<Commentlist> implements Mode
 	//评论隐藏
 	public String commentHide() {
 		Userinfo myinfo = (Userinfo) session.get("userinfo");
-		commentManageService.commentShowSet(model.getCommentNum(), "0");
 		if(myinfo.getUserAuthority() == 2)
+		{
+			commentManageService.commentShowSet(model.getCommentNum(), "0");
 			return "toTeacher";
-		else
+		}
+		else if(myinfo.getUserAuthority() == 3)
+		{
+			commentManageService.commentShowSet(model.getCommentNum(), "0");
 			return "toAdmin";
+		}
+		return "index";
 	}
 	
 	//评论恢复
 	public String commentShow() {
 		Userinfo myinfo = (Userinfo) session.get("userinfo");
-		commentManageService.commentShowSet(model.getCommentNum(), "1");
 		if(myinfo.getUserAuthority() == 2)
-			return "toTeacherDelete";
-		else
-			return "toAdminDelete";
+		{
+			commentManageService.commentShowSet(model.getCommentNum(), "1");
+			return "toTeacher";
+		}
+		else if(myinfo.getUserAuthority() == 3)
+		{
+			commentManageService.commentShowSet(model.getCommentNum(), "1");
+			return "toAdmin";
+		}
+		return "index";
+	}
+	
+	//新增评论
+	public String addComment() {
+		Userinfo myinfo = (Userinfo) session.get("userinfo");
+		if(myinfo.getUserAuthority() >= 1 && model.getCommentContent() != null && model.getCommentTarget() != null && model.getVideoNum() != null)
+		{
+			String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+			Commentlist commentlist = new Commentlist(model.getVideoNum(), model.getCommentContent(), time, myinfo.getUsername(), "1", "0");
+			commentListService.save(commentlist);
+			return "index";
+		}
+		return "index";
 	}
 
 	public int getPage() {

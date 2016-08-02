@@ -88,7 +88,8 @@
 	<bean id="commentListService" class="com.hly.videosys2.service.Impl.CommentListServiceImpl" parent="baseService" />
 	<bean id="videoManageService" class="com.hly.videosys2.service.Impl.VideoManageServiceImpl" parent="baseService" />
 	<bean id="commentManageService" class="com.hly.videosys2.service.Impl.CommentManageServiceImpl" parent="baseService" />
-
+	<bean id="banUserListService" class="com.hly.videosys2.service.Impl.BanUserServiceImpl" parent="baseService" />
+	
 	
 	
  	<bean id="indexAction" class="com.hly.videosys2.action.IndexAction" scope="prototype" parent="baseAction" />

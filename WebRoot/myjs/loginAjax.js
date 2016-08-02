@@ -1,13 +1,13 @@
 $(function() {
     $.ajax({  
-        type: "POST",   
+    	type: "POST",   
         url: "loginAjax.action",  
         data: "username=zhangsan",  
         dataType:'json',  
         success: function(data){ 
-       		if(data.username == "游客" || data.username == "null")
-   			{
-       			$("#loginText").show();
+        	if(data.username == "游客" || data.username == "null")
+        	{
+        		$("#loginText").show();
    			}
      		else
      		{
@@ -16,16 +16,18 @@ $(function() {
      			$("#money").text("积分:" + data.money);
      		}
        		if(data.authority == 2)
-   			{
+       		{
        			$("#videoManage").show();
    			} else if(data.authority == 3)
 			{
        			$("#adminManage").show();
 			}
         },  
-        error: function(){  
-            alert("出错了");  
-		}  
+        error: function(XMLHttpRequest, textStatus, errorThrown){
+            alert(XMLHttpRequest.status);
+            alert(XMLHttpRequest.readyState);
+            alert(textStatus);
+		}
 	}); 
 });
 
