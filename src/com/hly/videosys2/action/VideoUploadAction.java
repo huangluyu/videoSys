@@ -48,7 +48,7 @@ public class VideoUploadAction extends BaseAction<Videoinfo> implements
 		FileUtils.copyFile(myVideo, destFile);
 		//获取视频时长,ls单位毫秒
         Encoder encoder = new Encoder();
-        long ls = 0;
+        long ls = 0; //11
         MultimediaInfo m = encoder.getInfo(destFile);
         ls = m.getDuration();
         model.setVideoLength(ls/1000 + "");
